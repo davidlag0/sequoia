@@ -2,13 +2,29 @@
 
 <link rel="stylesheet" type="text/css" href="{% static 'main/style.css' %}" />
 
-{% if latest_question_list %}
-    <ul>
-    {% for question in latest_question_list %}
-        <li><a href="{% url 'main:detail' question.id %}">{{ question.question_text }}</a>
-        </li>
+<table>
+  <tr>
+    <th>Transaction Date</th>
+    <th>Custom Description</th>
+    <th>Expense</th>
+    <th>Revenue</th>
+    <th>Store</th>
+    <th>Account</th>
+    <th>Category</th>
+    <th>SubCategory</th>
+    <th>Status</th>
+    <th>Tags</th>
+  </tr>
+{% if latest_transaction_list %}
+    {% for transaction in latest_transaction_list %}
+    <tr>
+        <td>{{ transaction.transaction_date }}</td>
+        <td><a href="{% url 'main:detail' transaction.id %}">{{ transaction.custom_description }}</a></td>
+        <td>{{ transaction.expense }}</td>
+        <td>{{ transaction.revenue }}</td>
+    </tr>
     {% endfor %}
-    </ul>
+</table>
 {% else %}
-    <p>No polls are available.</p>
+    <p>No transactions are available.</p>
 {% endif %}
