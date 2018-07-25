@@ -22,6 +22,11 @@
         <td><a href="{% url 'main:detail' transaction.id %}">{{ transaction.custom_description }}</a></td>
         <td>{{ transaction.expense }}</td>
         <td>{{ transaction.revenue }}</td>
+        <td>{{ transaction.store }}</td>
+        <td>{{ transaction.account }}</td>
+        <td>{{ transaction.category }}</td>
+        <td>{{ transaction.subcategory }}</td>
+        <td>{{ transaction.status }}</td>
     </tr>
     {% endfor %}
 </table>
