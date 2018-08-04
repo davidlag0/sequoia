@@ -1,26 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   {% block title %}<title>Sequoia</title>{% endblock %}
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
- 
-  <!-- Add additional CSS in static file -->
+
   {% load static %}
-  <link rel="stylesheet" href="{% static 'main/style.css' %}">
+  <link href="{% static 'main/style.css' %}" rel="stylesheet">
 </head>
 <body>
+
 {% block topbar %}
-<div class="topnav">
-  <a class="active" href="">Home</a>
-  <a href="">Reports</a>
-  <a href="">Dashboards</a>
-  <a href="">Login</a>
-</div>
+<nav class="topnav">
+  <span><a class="active" href="{% url 'main:index' %}">Data Entries</a></span>
+  <span><a href="">Reports</a></span>
+  <span><a href="">Dashboards</a></span>
+  <span><a href="">Settings</a></span>
+  <span class="login"><a href="{% url 'login' %}">Login</a></span>
+</nav>
 {% endblock %}
 
-<div style="padding-left:16px">
-  <h2>Home</h2>
+<div style="padding-left:16px; padding-top:30px";>
   {% block content %}{% endblock %}
 </div>
 

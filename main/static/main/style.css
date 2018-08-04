@@ -1,14 +1,25 @@
-li a {
-    color: green;
+/* To ensure large content will be scaled down for smaller screens */
+img, embed, object, video {
+  max-width: 100%
 }
 
+/* Ensure tap targets are always of the recommended minimum size */
+/*
+nav, a, button {
+		min-width: 48px;
+		min-height: 48px;
+}
+*/
 body {
-    background: white url("images/background.gif") no-repeat;
     margin: 0;
     font-family: Arial, Helvetica, sans-serif;
 }
 
+/*
+ * Transaction List
+ */
 table {
+    font-size: 13px;
     font-family: arial, sans-serif;
     border-collapse: collapse;
     width: 100%;
@@ -17,13 +28,17 @@ table {
 td, th {
     border: 1px solid #dddddd;
     text-align: left;
-    padding: 8px;
+    padding: 6px;
 }
 
 tr:nth-child(even) {
     background-color: #dddddd;
 }
 
+
+/*
+ * Top Level Navigation
+ */
 .topnav {
   overflow: hidden;
   background-color: #333;
@@ -46,4 +61,8 @@ tr:nth-child(even) {
 .topnav a.active {
   background-color: #003cb3;
   color: white;
+}
+
+.topnav .login {
+  float: right;
 }
