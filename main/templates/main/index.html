@@ -1,6 +1,6 @@
-{% load static %}
+{% extends "main/base_generic.html" %}
 
-<link rel="stylesheet" type="text/css" href="{% static 'main/style.css' %}" />
+{% block content %}
 
 <table>
   <tr>
@@ -18,18 +18,20 @@
 {% if latest_transaction_list %}
     {% for transaction in latest_transaction_list %}
     <tr>
-        <td>{{ transaction.transaction_date }}</td>
-        <td><a href="{% url 'main:detail' transaction.id %}">{{ transaction.custom_description }}</a></td>
-        <td>{{ transaction.expense }}</td>
-        <td>{{ transaction.revenue }}</td>
-        <td>{{ transaction.store }}</td>
-        <td>{{ transaction.account }}</td>
-        <td>{{ transaction.category }}</td>
-        <td>{{ transaction.subcategory }}</td>
-        <td>{{ transaction.status }}</td>
+        <td>{{ transaction.transaction_date|default_if_none:""|date:"Y-m-d" }}</td>
+        <td><a href="{% url 'main:detail' transaction.id %}">{{ transaction.custom_description|default_if_none:"" }}</a></td>
+        <td>{{ transaction.expense|default_if_none:"" }}</td>
+        <td>{{ transaction.revenue|default_if_none:"" }}</td>
+        <td>{{ transaction.store|default_if_none:"" }}</td>
+        <td>{{ transaction.account|default_if_none:"" }}</td>
+        <td>{{ transaction.category|default_if_none:"" }}</td>
+        <td>{{ transaction.subcategory|default_if_none:"" }}</td>
+        <td>{{ transaction.status|default_if_none:"" }}</td>
     </tr>
     {% endfor %}
 </table>
 {% else %}
     <p>No transactions are available.</p>
 {% endif %}
+
+{% endblock %}

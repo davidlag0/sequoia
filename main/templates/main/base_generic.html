@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {% block title %}<title>Sequoia</title>{% endblock %}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+ 
+  <!-- Add additional CSS in static file -->
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'main/style.css' %}">
+</head>
+<body>
+{% block topbar %}
+<div class="topnav">
+  <a class="active" href="">Home</a>
+  <a href="">Reports</a>
+  <a href="">Dashboards</a>
+  <a href="">Login</a>
+</div>
+{% endblock %}
+
+<div style="padding-left:16px">
+  <h2>Home</h2>
+  {% block content %}{% endblock %}
+</div>
+
+</body>
+</html>
