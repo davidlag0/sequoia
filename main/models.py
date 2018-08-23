@@ -6,30 +6,50 @@ from django.utils import timezone
 
 class Store(models.Model):
     store_name = models.CharField(max_length=200)
+
+    class Meta:
+        permissions = (("sequoia_admin", "Full access to Sequoia"),)
+
     def __str__(self):
         return self.store_name
 
 
 class Account(models.Model):
     account_name = models.CharField(max_length=200)
+
+    class Meta:
+        permissions = (("sequoia_admin", "Full access to Sequoia"),)
+
     def __str__(self):
         return self.account_name
 
 
 class Category(models.Model):
     category_name = models.CharField(max_length=200)
+
+    class Meta:
+        permissions = (("sequoia_admin", "Full access to Sequoia"),)
+
     def __str__(self):
         return self.category_name
 
 
 class SubCategory(models.Model):
     subcategory_name = models.CharField(max_length=200)
+
+    class Meta:
+        permissions = (("sequoia_admin", "Full access to Sequoia"),)
+
     def __str__(self):
         return self.subcategory_name
 
 
 class Status(models.Model):
     status_name = models.CharField(max_length=200)
+
+    class Meta:
+        permissions = (("sequoia_admin", "Full access to Sequoia"),)
+
     def __str__(self):
         return self.status_name
 
@@ -46,6 +66,9 @@ class Transaction(models.Model):
     subcategory = models.ForeignKey(SubCategory, blank=True, null=True, on_delete=models.CASCADE)
     status = models.ForeignKey(Status, blank=False, null=False, on_delete=models.CASCADE)
 
+    class Meta:
+        permissions = (("sequoia_admin", "Full access to Sequoia"),)
+
     def __str__(self):
         return self.custom_description
 
@@ -60,5 +83,9 @@ class Transaction(models.Model):
 class Tag(models.Model):
     transaction = models.ForeignKey(Transaction, null=False, on_delete=models.CASCADE)
     tag_name = models.CharField(max_length=200)
+
+    class Meta:
+        permissions = (("sequoia_admin", "Full access to Sequoia"),)
+
     def __str__(self):
         return self.tag_name

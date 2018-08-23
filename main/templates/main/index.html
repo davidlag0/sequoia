@@ -2,6 +2,7 @@
 
 {% block content %}
 
+{% if latest_transaction_list %}
 <table>
   <tr>
     <th>Transaction Date</th>
@@ -15,8 +16,7 @@
     <th>Status</th>
     <th>Tags</th>
   </tr>
-{% if latest_transaction_list %}
-    {% for transaction in latest_transaction_list %}
+  {% for transaction in latest_transaction_list %}
     <tr>
         <td>{{ transaction.transaction_date|default_if_none:""|date:"Y-m-d" }}</td>
         <td><a href="{% url 'main:detail' transaction.id %}">{{ transaction.custom_description|default_if_none:"" }}</a></td>
@@ -28,7 +28,7 @@
         <td>{{ transaction.subcategory|default_if_none:"" }}</td>
         <td>{{ transaction.status|default_if_none:"" }}</td>
     </tr>
-    {% endfor %}
+  {% endfor %}
 </table>
 {% else %}
     <p>No transactions are available.</p>

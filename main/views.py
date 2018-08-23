@@ -4,11 +4,11 @@ from django.urls import reverse
 from django.views import generic
 from django.db.models import F
 from django.utils import timezone
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import Transaction, Store, Account, Category, SubCategory, Status, Tag
 
-
-class IndexView(generic.ListView):
+class IndexView(LoginRequiredMixin, generic.ListView):
     template_name = 'main/index.html'
     context_object_name = 'latest_transaction_list'
 
@@ -21,17 +21,12 @@ class IndexView(generic.ListView):
         ).order_by('-transaction_date')[:5]
 
 
-class DetailView(generic.DetailView):
+class DetailView(LoginRequiredMixin, generic.DetailView):
     model = Transaction
     template_name = 'main/detail.html'
 
     def get_queryset(self):
         return Transaction.objects.filter(transaction_date__lte=timezone.now())
-
-
-class ResultsView(generic.DetailView):
-    model = Transaction
-    template_name = 'main/results.html'
 
 
 def vote(request, transaction_id):
@@ -50,4 +45,4 @@ def vote(request, transaction_id):
         # Always return an HttpResponseRedirect after successfully dealing
         # with POST data. This prevents data from being posted twice if a
         # user hits the Back button.
-        return HttpResponseRedirect(reverse('main:results', args=(transaction.id,)))
+        return HttpResponseRedirect(reverse('main:detail', args=(transaction.id,)))

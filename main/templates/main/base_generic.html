@@ -13,10 +13,18 @@
 {% block topbar %}
 <nav class="topnav">
   <span><a class="active" href="{% url 'main:index' %}">Data Entries</a></span>
-  <span><a href="">Reports</a></span>
-  <span><a href="">Dashboards</a></span>
-  <span><a href="">Settings</a></span>
-  <span class="login"><a href="{% url 'login' %}">Login</a></span>
+  <span><a>Reports</a></span>
+  <span><a>Dashboards</a></span>
+  <span><a>Settings</a></span>
+
+  <div class="login">
+  {% if user.is_authenticated %}
+    <span><a>User: {{ user.get_username }}</a></span>
+    <span><a href="{% url 'logout'%}?next={{request.path}}">Logout</a></span>
+  {% else %}
+    <span><a href="{% url 'login'%}?next={{request.path}}">Login</a></span>
+  {% endif %}
+  </div>
 </nav>
 {% endblock %}
 
