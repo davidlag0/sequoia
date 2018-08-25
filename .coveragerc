@@ -1,0 +1,11 @@
+[run]
+source = .
+branch = True
+
+[report]
+show_missing = True
+omit =
+  ./sequoia/*
+  ./main/*
+  ./manage.py
+  ./*/apps.py

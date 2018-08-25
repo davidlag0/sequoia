@@ -19,6 +19,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'api',
+    'django_nose',
 ]
 
 MIDDLEWARE = [
@@ -100,3 +101,18 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
 LOGIN_REDIRECT_URL = '/'
+
+# Use nose to run all tests
+#TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+
+# Tell nose to measure coverage on the 'foo' and 'bar' apps
+"""
+NOSE_ARGS = [
+    '--with-coverage',
+    '--cover-package=api',
+    '--verbosity=2',
+    '--cover-branches',
+    '--cover-erase',
+    '--cover-html',
+]
+"""

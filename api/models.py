@@ -18,3 +18,12 @@ class Account(models.Model):
         """Return a human readable representation of the model instance."""
         return "{}".format(self.name)
 
+
+class Category(models.Model):
+    """This class represents the Category model."""
+    name = models.CharField(max_length=255, blank=False, unique=True)
+
+    def __str__(self):
+        """Return a human readable representation of the model instance."""
+        return "{}".format(self.name)
+

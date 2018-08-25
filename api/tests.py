@@ -1,5 +1,5 @@
 from django.test import TestCase
-from .models import Store, Account
+from .models import Store, Account, Category
 from rest_framework.test import APIClient
 from rest_framework import status
 from django.urls import reverse
@@ -34,6 +34,22 @@ class AccountModelTestCase(TestCase):
         old_count = Account.objects.count()
         self.account.save()
         new_count = Account.objects.count()
+        self.assertNotEqual(old_count, new_count)
+
+
+class CategoryModelTestCase(TestCase):
+    """This class defines the test suite for the API Category model."""
+
+    def setUp(self):
+        """Define the test client and other test variables."""
+        self.category_name = "Dummy Category"
+        self.category = Category(name=self.category_name)
+
+    def test_model_can_create_a_category(self):
+        """Test the Category model can create a category."""
+        old_count = Category.objects.count()
+        self.category.save()
+        new_count = Category.objects.count()
         self.assertNotEqual(old_count, new_count)
 
 
@@ -124,6 +140,52 @@ class AccountViewTestCase(TestCase):
         account = Account.objects.get()
         response = self.client.delete(
             reverse('details_account', kwargs={'pk': account.id}),
+            format='json',
+            follow=True)
+        self.assertEquals(response.status_code, status.HTTP_204_NO_CONTENT)
+
+
+class CategoryViewTestCase(TestCase):
+    """Test suite for the api Category views."""
+
+    def setUp(self):
+        """Define the test client and other test variables."""
+        self.client = APIClient()
+
+        self.data = {'name': 'Dummy Category1'}
+        self.response = self.client.post(
+            reverse('create_category'),
+            self.data,
+            format="json")
+
+    def test_api_can_create_category(self):
+        """Test the api has category creation capability."""
+        self.assertEqual(self.response.status_code, status.HTTP_201_CREATED)
+
+    def test_api_can_get_category(self):
+        """Test the api can get a given category."""
+        category = Category.objects.get()
+        response = self.client.get(
+            reverse('details_category',
+            kwargs={'pk': category.id}), format="json")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertContains(response, category)
+
+    def test_api_can_update_category(self):
+        """Test the api can update a given category."""
+        category = Category.objects.get()
+        change_category = {'name': 'Changed Category'}
+        res = self.client.put(
+            reverse('details_category', kwargs={'pk': category.id}),
+            change_category, format='json'
+        )
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+
+    def test_api_can_delete_category(self):
+        """Test the api can delete a category."""
+        category = Category.objects.get()
+        response = self.client.delete(
+            reverse('details_category', kwargs={'pk': category.id}),
             format='json',
             follow=True)
         self.assertEquals(response.status_code, status.HTTP_204_NO_CONTENT)
