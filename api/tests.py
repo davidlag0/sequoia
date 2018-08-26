@@ -1,5 +1,5 @@
 from django.test import TestCase
-from .models import Store, Account, Category
+from .models import Store, Account, Category, SubCategory, TransactionStatus
 from rest_framework.test import APIClient
 from rest_framework import status
 from django.urls import reverse
@@ -50,6 +50,38 @@ class CategoryModelTestCase(TestCase):
         old_count = Category.objects.count()
         self.category.save()
         new_count = Category.objects.count()
+        self.assertNotEqual(old_count, new_count)
+
+
+class SubCategoryModelTestCase(TestCase):
+    """This class defines the test suite for the API SubCategory model."""
+
+    def setUp(self):
+        """Define the test client and other test variables."""
+        self.subcategory_name = "Dummy SubCategory"
+        self.subcategory = SubCategory(name=self.subcategory_name)
+
+    def test_model_can_create_a_subcategory(self):
+        """Test the Category model can create a subcategory."""
+        old_count = SubCategory.objects.count()
+        self.subcategory.save()
+        new_count = SubCategory.objects.count()
+        self.assertNotEqual(old_count, new_count)
+
+
+class TransactionStatusModelTestCase(TestCase):
+    """This class defines the test suite for the API TransactionStatus model."""
+
+    def setUp(self):
+        """Define the test client and other test variables."""
+        self.transactionstatus_name = "Dummy TransactionStatus"
+        self.transactionstatus = TransactionStatus(name=self.transactionstatus_name)
+
+    def test_model_can_create_a_transactionstatus(self):
+        """Test the TransactionStatus model can create a transactionstatus."""
+        old_count = TransactionStatus.objects.count()
+        self.transactionstatus.save()
+        new_count = TransactionStatus.objects.count()
         self.assertNotEqual(old_count, new_count)
 
 
@@ -186,6 +218,98 @@ class CategoryViewTestCase(TestCase):
         category = Category.objects.get()
         response = self.client.delete(
             reverse('details_category', kwargs={'pk': category.id}),
+            format='json',
+            follow=True)
+        self.assertEquals(response.status_code, status.HTTP_204_NO_CONTENT)
+
+
+class SubCategoryViewTestCase(TestCase):
+    """Test suite for the api SubCategory views."""
+
+    def setUp(self):
+        """Define the test client and other test variables."""
+        self.client = APIClient()
+
+        self.data = {'name': 'Dummy SubCategory1'}
+        self.response = self.client.post(
+            reverse('create_subcategory'),
+            self.data,
+            format="json")
+
+    def test_api_can_create_subcategory(self):
+        """Test the api has subcategory creation capability."""
+        self.assertEqual(self.response.status_code, status.HTTP_201_CREATED)
+
+    def test_api_can_get_subcategory(self):
+        """Test the api can get a given subcategory."""
+        subcategory = SubCategory.objects.get()
+        response = self.client.get(
+            reverse('details_subcategory',
+            kwargs={'pk': subcategory.id}), format="json")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertContains(response, subcategory)
+
+    def test_api_can_update_subcategory(self):
+        """Test the api can update a given subcategory."""
+        subcategory = SubCategory.objects.get()
+        change_subcategory = {'name': 'Changed SubCategory'}
+        res = self.client.put(
+            reverse('details_subcategory', kwargs={'pk': subcategory.id}),
+            change_subcategory, format='json'
+        )
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+
+    def test_api_can_delete_subcategory(self):
+        """Test the api can delete a subcategory."""
+        subcategory = SubCategory.objects.get()
+        response = self.client.delete(
+            reverse('details_subcategory', kwargs={'pk': subcategory.id}),
+            format='json',
+            follow=True)
+        self.assertEquals(response.status_code, status.HTTP_204_NO_CONTENT)
+
+
+class TransactionStatusViewTestCase(TestCase):
+    """Test suite for the api TransactionStatus views."""
+
+    def setUp(self):
+        """Define the test client and other test variables."""
+        self.client = APIClient()
+
+        self.data = {'name': 'Dummy TransactionStatus1'}
+        self.response = self.client.post(
+            reverse('create_transactionstatus'),
+            self.data,
+            format="json")
+
+    def test_api_can_create_transactionstatus(self):
+        """Test the api has transactionstatus creation capability."""
+        self.assertEqual(self.response.status_code, status.HTTP_201_CREATED)
+
+    def test_api_can_get_transactionstatus(self):
+        """Test the api can get a given transactionstatus."""
+        transactionstatus = TransactionStatus.objects.get()
+        response = self.client.get(
+            reverse('details_transactionstatus',
+            kwargs={'pk': transactionstatus.id}), format="json")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertContains(response, transactionstatus)
+
+    def test_api_can_update_transactionstatus(self):
+        """Test the api can update a given transactionstatus."""
+        transactionstatus = TransactionStatus.objects.get()
+        change_transactionstatus = {'name': 'Changed TransactionStatus'}
+        res = self.client.put(
+            reverse('details_transactionstatus', kwargs={'pk': transactionstatus.id}),
+            change_transactionstatus, format='json'
+        )
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+
+    def test_api_can_delete_transactionstatus(self):
+        """Test the api can delete a transactionstatus."""
+        transactionstatus = TransactionStatus.objects.get()
+        response = self.client.delete(
+            reverse('details_transactionstatus', kwargs={'pk': transactionstatus.id}),
             format='json',
             follow=True)
         self.assertEquals(response.status_code, status.HTTP_204_NO_CONTENT)

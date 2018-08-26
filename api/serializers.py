@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Store, Account, Category
+from .models import Store, Account, Category, SubCategory, TransactionStatus
 
 
 class StoreSerializer(serializers.ModelSerializer):
@@ -29,3 +29,20 @@ class CategorySerializer(serializers.ModelSerializer):
         model = Category
         fields = ('id', 'name')
 
+
+class SubCategorySerializer(serializers.ModelSerializer):
+    """Serializer to map the SubCategory instance into JSON format."""
+
+    class Meta:
+        """Meta class to map serializer's fields with the model fields."""
+        model = SubCategory
+        fields = ('id', 'name')
+
+
+class TransactionStatusSerializer(serializers.ModelSerializer):
+    """Serializer to map the TransactionStatus instance into JSON format."""
+
+    class Meta:
+        """Meta class to map serializer's fields with the model fields."""
+        model = TransactionStatus
+        fields = ('id', 'name')

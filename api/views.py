@@ -1,7 +1,8 @@
 from rest_framework import generics
 from .serializers import StoreSerializer, AccountSerializer
-from .serializers import CategorySerializer
-from .models import Store, Account, Category
+from .serializers import CategorySerializer, SubCategorySerializer
+from .serializers import TransactionStatusSerializer
+from .models import Store, Account, Category, SubCategory, TransactionStatus
 
 
 class StoreCreateView(generics.ListCreateAPIView):
@@ -50,4 +51,36 @@ class CategoryDetailsView(generics.RetrieveUpdateDestroyAPIView):
     """This class handles the http GET, PUT and DELETE requests of a category."""
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
+
+
+class SubCategoryCreateView(generics.ListCreateAPIView):
+    """This class defines the create behavior of a subcategory in our rest api."""
+    queryset = SubCategory.objects.all()
+    serializer_class = SubCategorySerializer
+
+    def perform_create(self, serializer):
+        """Save the post data when creating a new subcategory."""
+        serializer.save()
+
+
+class SubCategoryDetailsView(generics.RetrieveUpdateDestroyAPIView):
+    """This class handles the http GET, PUT and DELETE requests of a subcategory."""
+    queryset = SubCategory.objects.all()
+    serializer_class = SubCategorySerializer
+
+
+class TransactionStatusCreateView(generics.ListCreateAPIView):
+    """This class defines the create behavior of a transactionstatus in our rest api."""
+    queryset = TransactionStatus.objects.all()
+    serializer_class = TransactionStatusSerializer
+
+    def perform_create(self, serializer):
+        """Save the post data when creating a new transactionstatus."""
+        serializer.save()
+
+
+class TransactionStatusDetailsView(generics.RetrieveUpdateDestroyAPIView):
+    """This class handles the http GET, PUT and DELETE requests of a transactionstatus."""
+    queryset = TransactionStatus.objects.all()
+    serializer_class = TransactionStatusSerializer
 

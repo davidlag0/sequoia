@@ -9,3 +9,4 @@ omit =
   ./main/*
   ./manage.py
   ./*/apps.py
+  ./*/migrations/*
