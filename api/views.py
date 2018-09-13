@@ -1,4 +1,4 @@
-from rest_framework import generics
+from rest_framework import generics, filters
 from .serializers import StoreSerializer, AccountSerializer
 from .serializers import CategorySerializer, SubCategorySerializer
 from .serializers import TransactionStatusSerializer
@@ -9,6 +9,8 @@ class StoreCreateView(generics.ListCreateAPIView):
     """This class defines the create behavior of a store in our rest api."""
     queryset = Store.objects.all()
     serializer_class = StoreSerializer
+    filter_backends = (filters.SearchFilter,)
+    search_fields = ('name',)
 
     def perform_create(self, serializer):
         """Save the post data when creating a new store."""
