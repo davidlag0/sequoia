@@ -1,5 +1,6 @@
 from django.test import TestCase
-from .models import Store, Account, Category, SubCategory, TransactionStatus
+from .models import Store, Account, Category, SubCategory
+from .models import TransactionStatus, Tag, Transaction
 from rest_framework.test import APIClient
 from rest_framework import status
 from django.urls import reverse
