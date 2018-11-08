@@ -5,6 +5,7 @@ from .models import TransactionStatus, Tag, Transaction
 from rest_framework.test import APIClient
 from rest_framework import status
 from django.urls import reverse
+import time
 
 
 class StoreModelTestCase(TestCase):
@@ -367,6 +368,88 @@ class TransactionStatusViewTestCase(TestCase):
         transactionstatus = TransactionStatus.objects.get()
         response = self.client.delete(
             reverse('details_transactionstatus', kwargs={'pk': transactionstatus.id}),
+            format='json',
+            follow=True)
+        self.assertEquals(response.status_code, status.HTTP_204_NO_CONTENT)
+
+
+class TransactionViewTestCase(TestCase):
+    """Test suite for the api Transaction views."""
+
+    def setUp(self):
+        """Define the test client and other test variables."""
+        user = User.objects.create_user(username="testuser")
+
+        # Initialize client and force it to use authentication
+        self.client = APIClient()
+        self.client.force_authenticate(user=user)
+
+        # Create a new account.
+        self.account = Account(name="Dummy Account123")
+        self.account.save()
+
+        # Create new categoryself.
+        self.category = Category(name="Dummy category123")
+        self.category.save()
+
+        # Create new transactionstatus.
+        self.transactionstatus = TransactionStatus(name="Dummy status 123")
+        self.transactionstatus.save()
+
+        self.data = {
+            'transaction_date': time.strftime('%Y-%m-%dT%H:%M:%S'),
+            'original_description': 'Dummy Transaction1',
+            'account': self.account.id,
+            'category': self.category.id,
+            'transactionstatus': self.transactionstatus.id
+        }
+
+        self.response = self.client.post(
+            reverse('create_transaction'),
+            self.data,
+            format="json")
+
+    def test_api_can_create_transaction(self):
+        """Test the api has transaction creation capability."""
+        self.assertEqual(self.response.status_code, status.HTTP_201_CREATED)
+
+    def test_authorization_is_enforced(self):
+        """Test that the api has user authorization."""
+        new_client = APIClient()
+        response = new_client.get(reverse('details_transaction',
+            kwargs={'pk': 3}), format="json")
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_api_can_get_transaction(self):
+        """Test the api can get a given transaction."""
+        transaction = Transaction.objects.get()
+        response = self.client.get(
+            reverse('details_transaction',
+            kwargs={'pk': transaction.id}), format="json")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertContains(response, transaction)
+
+    def test_api_can_update_transaction(self):
+        """Test the api can update a given transaction."""
+        transaction = Transaction.objects.get()
+        change_transaction = {
+            'transaction_date': transaction.transaction_date,
+            'original_description': 'Changed Transaction Desc',
+            'account': self.account.id,
+            'category': self.category.id,
+            'transactionstatus': self.transactionstatus.id
+        }
+        res = self.client.put(
+            reverse('details_transaction', kwargs={'pk': transaction.id}),
+            change_transaction, format='json'
+        )
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+
+    def test_api_can_delete_transaction(self):
+        """Test the api can delete a transaction."""
+        transaction = Transaction.objects.get()
+        response = self.client.delete(
+            reverse('details_transaction', kwargs={'pk': transaction.id}),
             format='json',
             follow=True)
         self.assertEquals(response.status_code, status.HTTP_204_NO_CONTENT)
