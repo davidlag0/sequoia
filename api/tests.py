@@ -6,6 +6,8 @@ from rest_framework.test import APIClient
 from rest_framework import status
 from django.urls import reverse
 import time
+from django.utils import timezone
+import pytz
 
 
 class StoreModelTestCase(TestCase):
@@ -388,7 +390,7 @@ class TransactionViewTestCase(TestCase):
         self.account = Account(name="Dummy Account123")
         self.account.save()
 
-        # Create new categoryself.
+        # Create new category.
         self.category = Category(name="Dummy category123")
         self.category.save()
 
@@ -450,6 +452,92 @@ class TransactionViewTestCase(TestCase):
         transaction = Transaction.objects.get()
         response = self.client.delete(
             reverse('details_transaction', kwargs={'pk': transaction.id}),
+            format='json',
+            follow=True)
+        self.assertEquals(response.status_code, status.HTTP_204_NO_CONTENT)
+
+
+class TagViewTestCase(TestCase):
+    """Test suite for the api Tag views."""
+
+    def setUp(self):
+        """Define the test client and other test variables."""
+        user = User.objects.create_user(username="testuser")
+
+        # Initialize client and force it to use authentication
+        self.client = APIClient()
+        self.client.force_authenticate(user=user)
+
+        # Create a new account.
+        self.account = Account(name="Dummy Account1234")
+        self.account.save()
+
+        # Create new category.
+        self.category = Category(name="Dummy category1234")
+        self.category.save()
+
+        # Create new transactionstatus.
+        self.transactionstatus = TransactionStatus(name="Dummy status 1234")
+        self.transactionstatus.save()
+
+        # Create new transaction.
+        self.transaction = Transaction(
+            transaction_date=timezone.now(),
+            original_description='Dummy Transaction124',
+            account=self.account,
+            category=self.category,
+            transactionstatus=self.transactionstatus
+        )
+        self.transaction.save()
+
+        self.data = {
+            'transaction_id': self.transaction.id,
+            'tag_name': 'Dummy Tag Name 123'
+        }
+
+        self.response = self.client.post(
+            reverse('create_tag'),
+            self.data,
+            format="json")
+
+    def test_api_can_create_tag(self):
+        """Test the api has tag creation capability."""
+        self.assertEqual(self.response.status_code, status.HTTP_201_CREATED)
+
+    def test_authorization_is_enforced(self):
+        """Test that the api has user authorization."""
+        new_client = APIClient()
+        response = new_client.get(reverse('details_tag',
+            kwargs={'pk': 3}), format="json")
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_api_can_get_tag(self):
+        """Test the api can get a given tag."""
+        tag = Tag.objects.get()
+        response = self.client.get(
+            reverse('details_tag',
+            kwargs={'pk': tag.id}), format="json")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertContains(response, tag)
+
+    def test_api_can_update_tag(self):
+        """Test the api can update a given tag."""
+        tag = Tag.objects.get()
+        change_tag = {
+            'transaction_id': self.transaction.id,
+            'tag_name': 'Changed Tag Name'
+        }
+        res = self.client.put(
+            reverse('details_tag', kwargs={'pk': tag.id}),
+            change_tag, format='json'
+        )
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+
+    def test_api_can_delete_tag(self):
+        """Test the api can delete a tag."""
+        tag = Tag.objects.get()
+        response = self.client.delete(
+            reverse('details_tag', kwargs={'pk': tag.id}),
             format='json',
             follow=True)
         self.assertEquals(response.status_code, status.HTTP_204_NO_CONTENT)
