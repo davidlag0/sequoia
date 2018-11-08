@@ -3,8 +3,8 @@ __pycache__/
 .env
 venv/
 
+# Code coverage
+.coverage
 
 # SQLite database files
-
 *.sqlite3
-
