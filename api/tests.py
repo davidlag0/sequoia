@@ -1,4 +1,5 @@
 from django.test import TestCase
+from django.contrib.auth.models import User
 from .models import Store, Account, Category, SubCategory
 from .models import TransactionStatus, Tag, Transaction
 from rest_framework.test import APIClient
@@ -91,7 +92,11 @@ class StoreViewTestCase(TestCase):
 
     def setUp(self):
         """Define the test client and other test variables."""
+        user = User.objects.create_user(username="testuser")
+
+        # Initialize client and force it to use authentication
         self.client = APIClient()
+        self.client.force_authenticate(user=user)
 
         self.data = {'name': 'Dummy Store1'}
         self.response = self.client.post(
@@ -102,6 +107,13 @@ class StoreViewTestCase(TestCase):
     def test_api_can_create_store(self):
         """Test the api has store creation capability."""
         self.assertEqual(self.response.status_code, status.HTTP_201_CREATED)
+
+    def test_authorization_is_enforced(self):
+        """Test that the api has user authorization."""
+        new_client = APIClient()
+        response = new_client.get(reverse('details_store',
+            kwargs={'pk': 3}), format="json")
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_api_can_get_store(self):
         """Test the api can get a given store."""
@@ -137,7 +149,11 @@ class AccountViewTestCase(TestCase):
 
     def setUp(self):
         """Define the test client and other test variables."""
+        user = User.objects.create_user(username="testuser")
+
+        # Initialize client and force it to use authentication
         self.client = APIClient()
+        self.client.force_authenticate(user=user)
 
         self.data = {'name': 'Dummy Account1'}
         self.response = self.client.post(
@@ -148,6 +164,13 @@ class AccountViewTestCase(TestCase):
     def test_api_can_create_account(self):
         """Test the api has account creation capability."""
         self.assertEqual(self.response.status_code, status.HTTP_201_CREATED)
+
+    def test_authorization_is_enforced(self):
+        """Test that the api has user authorization."""
+        new_client = APIClient()
+        response = new_client.get(reverse('details_account',
+            kwargs={'pk': 3}), format="json")
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_api_can_get_account(self):
         """Test the api can get a given account."""
@@ -183,7 +206,11 @@ class CategoryViewTestCase(TestCase):
 
     def setUp(self):
         """Define the test client and other test variables."""
+        user = User.objects.create_user(username="testuser")
+
+        # Initialize client and force it to use authentication
         self.client = APIClient()
+        self.client.force_authenticate(user=user)
 
         self.data = {'name': 'Dummy Category1'}
         self.response = self.client.post(
@@ -194,6 +221,13 @@ class CategoryViewTestCase(TestCase):
     def test_api_can_create_category(self):
         """Test the api has category creation capability."""
         self.assertEqual(self.response.status_code, status.HTTP_201_CREATED)
+
+    def test_authorization_is_enforced(self):
+        """Test that the api has user authorization."""
+        new_client = APIClient()
+        response = new_client.get(reverse('details_category',
+            kwargs={'pk': 3}), format="json")
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_api_can_get_category(self):
         """Test the api can get a given category."""
@@ -229,7 +263,11 @@ class SubCategoryViewTestCase(TestCase):
 
     def setUp(self):
         """Define the test client and other test variables."""
+        user = User.objects.create_user(username="testuser")
+
+        # Initialize client and force it to use authentication
         self.client = APIClient()
+        self.client.force_authenticate(user=user)
 
         self.data = {'name': 'Dummy SubCategory1'}
         self.response = self.client.post(
@@ -240,6 +278,13 @@ class SubCategoryViewTestCase(TestCase):
     def test_api_can_create_subcategory(self):
         """Test the api has subcategory creation capability."""
         self.assertEqual(self.response.status_code, status.HTTP_201_CREATED)
+
+    def test_authorization_is_enforced(self):
+        """Test that the api has user authorization."""
+        new_client = APIClient()
+        response = new_client.get(reverse('details_subcategory',
+            kwargs={'pk': 3}), format="json")
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_api_can_get_subcategory(self):
         """Test the api can get a given subcategory."""
@@ -275,7 +320,11 @@ class TransactionStatusViewTestCase(TestCase):
 
     def setUp(self):
         """Define the test client and other test variables."""
+        user = User.objects.create_user(username="testuser")
+
+        # Initialize client and force it to use authentication
         self.client = APIClient()
+        self.client.force_authenticate(user=user)
 
         self.data = {'name': 'Dummy TransactionStatus1'}
         self.response = self.client.post(
@@ -286,6 +335,13 @@ class TransactionStatusViewTestCase(TestCase):
     def test_api_can_create_transactionstatus(self):
         """Test the api has transactionstatus creation capability."""
         self.assertEqual(self.response.status_code, status.HTTP_201_CREATED)
+
+    def test_authorization_is_enforced(self):
+        """Test that the api has user authorization."""
+        new_client = APIClient()
+        response = new_client.get(reverse('details_transactionstatus',
+            kwargs={'pk': 3}), format="json")
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_api_can_get_transactionstatus(self):
         """Test the api can get a given transactionstatus."""
