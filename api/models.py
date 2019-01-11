@@ -82,7 +82,10 @@ class Tag(models.Model):
     """This class represents the Tag model."""
     transaction_id = models.ForeignKey(Transaction, null=False,
         on_delete=models.PROTECT)
-    tag_name = models.CharField(max_length=255, unique=True)
+    tag_name = models.CharField(max_length=255, blank=False, null=False)
+
+    class Meta:
+        unique_together = (("transaction_id", "tag_name"),)
 
     def __str__(self):
         """Return a human readable representation of the model instance."""
