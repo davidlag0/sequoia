@@ -22,6 +22,7 @@ INSTALLED_APPS = [
     'api',
     'django_nose',
     'corsheaders',
+    'graphene_django',
 ]
 
 MIDDLEWARE = [
@@ -123,13 +124,24 @@ REST_FRAMEWORK = {
     ),
 }
 
+GRAPHENE = {
+    'MIDDLEWARE': [
+        'graphql_jwt.middleware.JSONWebTokenMiddleware',
+    ],
+}
+
 JWT_AUTH = {
     'JWT_ALLOW_REFRESH': True,
     'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=3600),
 }
 
+AUTHENTICATION_BACKENDS = [
+    'graphql_jwt.backends.JSONWebTokenBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
+
 # Use nose to run all tests
-#TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+# TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 
 # Tell nose to measure coverage on the 'foo' and 'bar' apps
 """
