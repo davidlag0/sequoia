@@ -125,6 +125,7 @@ REST_FRAMEWORK = {
 }
 
 GRAPHENE = {
+    'SCHEMA': 'sequoia.schema.schema',
     'MIDDLEWARE': [
         'graphql_jwt.middleware.JSONWebTokenMiddleware',
     ],
@@ -139,6 +140,22 @@ AUTHENTICATION_BACKENDS = [
     'graphql_jwt.backends.JSONWebTokenBackend',
     'django.contrib.auth.backends.ModelBackend',
 ]
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
+        },
+    },
+}
 
 # Use nose to run all tests
 # TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'

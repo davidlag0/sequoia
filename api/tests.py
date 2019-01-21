@@ -7,7 +7,8 @@ from rest_framework import status
 from django.urls import reverse
 import time
 from django.utils import timezone
-import pytz
+from django.contrib.auth import get_user_model
+from graphql_jwt.testcases import JSONWebTokenTestCase
 
 
 class StoreModelTestCase(TestCase):
@@ -75,12 +76,17 @@ class SubCategoryModelTestCase(TestCase):
 
 
 class TransactionStatusModelTestCase(TestCase):
-    """This class defines the test suite for the API TransactionStatus model."""
+    """TransactionStatus REST API.
+
+    This class defines the test suite for the API
+    TransactionStatus model.
+    """
 
     def setUp(self):
         """Define the test client and other test variables."""
         self.transactionstatus_name = "Dummy TransactionStatus"
-        self.transactionstatus = TransactionStatus(name=self.transactionstatus_name)
+        self.transactionstatus = TransactionStatus(
+            name=self.transactionstatus_name)
 
     def test_model_can_create_a_transactionstatus(self):
         """Test the TransactionStatus model can create a transactionstatus."""
@@ -90,6 +96,9 @@ class TransactionStatusModelTestCase(TestCase):
         self.assertNotEqual(old_count, new_count)
 
 
+#
+# Tests for REST API
+#
 class StoreViewTestCase(TestCase):
     """Test suite for the api Store views."""
 
@@ -115,7 +124,7 @@ class StoreViewTestCase(TestCase):
         """Test that the api has user authorization."""
         new_client = APIClient()
         response = new_client.get(reverse('details_store',
-            kwargs={'pk': 3}), format="json")
+                                  kwargs={'pk': 3}), format="json")
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_api_can_get_store(self):
@@ -123,7 +132,7 @@ class StoreViewTestCase(TestCase):
         store = Store.objects.get()
         response = self.client.get(
             reverse('details_store',
-            kwargs={'pk': store.id}), format="json")
+                    kwargs={'pk': store.id}), format="json")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertContains(response, store)
 
@@ -172,7 +181,7 @@ class AccountViewTestCase(TestCase):
         """Test that the api has user authorization."""
         new_client = APIClient()
         response = new_client.get(reverse('details_account',
-            kwargs={'pk': 3}), format="json")
+                                  kwargs={'pk': 3}), format="json")
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_api_can_get_account(self):
@@ -180,7 +189,7 @@ class AccountViewTestCase(TestCase):
         account = Account.objects.get()
         response = self.client.get(
             reverse('details_account',
-            kwargs={'pk': account.id}), format="json")
+                    kwargs={'pk': account.id}), format="json")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertContains(response, account)
 
@@ -229,7 +238,7 @@ class CategoryViewTestCase(TestCase):
         """Test that the api has user authorization."""
         new_client = APIClient()
         response = new_client.get(reverse('details_category',
-            kwargs={'pk': 3}), format="json")
+                                  kwargs={'pk': 3}), format="json")
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_api_can_get_category(self):
@@ -237,7 +246,7 @@ class CategoryViewTestCase(TestCase):
         category = Category.objects.get()
         response = self.client.get(
             reverse('details_category',
-            kwargs={'pk': category.id}), format="json")
+                    kwargs={'pk': category.id}), format="json")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertContains(response, category)
 
@@ -286,7 +295,7 @@ class SubCategoryViewTestCase(TestCase):
         """Test that the api has user authorization."""
         new_client = APIClient()
         response = new_client.get(reverse('details_subcategory',
-            kwargs={'pk': 3}), format="json")
+                                  kwargs={'pk': 3}), format="json")
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_api_can_get_subcategory(self):
@@ -294,7 +303,7 @@ class SubCategoryViewTestCase(TestCase):
         subcategory = SubCategory.objects.get()
         response = self.client.get(
             reverse('details_subcategory',
-            kwargs={'pk': subcategory.id}), format="json")
+                    kwargs={'pk': subcategory.id}), format="json")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertContains(response, subcategory)
 
@@ -343,7 +352,7 @@ class TransactionStatusViewTestCase(TestCase):
         """Test that the api has user authorization."""
         new_client = APIClient()
         response = new_client.get(reverse('details_transactionstatus',
-            kwargs={'pk': 3}), format="json")
+                                  kwargs={'pk': 3}), format="json")
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_api_can_get_transactionstatus(self):
@@ -351,7 +360,7 @@ class TransactionStatusViewTestCase(TestCase):
         transactionstatus = TransactionStatus.objects.get()
         response = self.client.get(
             reverse('details_transactionstatus',
-            kwargs={'pk': transactionstatus.id}), format="json")
+                    kwargs={'pk': transactionstatus.id}), format="json")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertContains(response, transactionstatus)
 
@@ -360,7 +369,8 @@ class TransactionStatusViewTestCase(TestCase):
         transactionstatus = TransactionStatus.objects.get()
         change_transactionstatus = {'name': 'Changed TransactionStatus'}
         res = self.client.put(
-            reverse('details_transactionstatus', kwargs={'pk': transactionstatus.id}),
+            reverse('details_transactionstatus',
+                    kwargs={'pk': transactionstatus.id}),
             change_transactionstatus, format='json'
         )
         self.assertEqual(res.status_code, status.HTTP_200_OK)
@@ -369,7 +379,8 @@ class TransactionStatusViewTestCase(TestCase):
         """Test the api can delete a transactionstatus."""
         transactionstatus = TransactionStatus.objects.get()
         response = self.client.delete(
-            reverse('details_transactionstatus', kwargs={'pk': transactionstatus.id}),
+            reverse('details_transactionstatus',
+                    kwargs={'pk': transactionstatus.id}),
             format='json',
             follow=True)
         self.assertEquals(response.status_code, status.HTTP_204_NO_CONTENT)
@@ -419,7 +430,7 @@ class TransactionViewTestCase(TestCase):
         """Test that the api has user authorization."""
         new_client = APIClient()
         response = new_client.get(reverse('details_transaction',
-            kwargs={'pk': 3}), format="json")
+                                          kwargs={'pk': 3}), format="json")
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_api_can_get_transaction(self):
@@ -427,7 +438,7 @@ class TransactionViewTestCase(TestCase):
         transaction = Transaction.objects.get()
         response = self.client.get(
             reverse('details_transaction',
-            kwargs={'pk': transaction.id}), format="json")
+                    kwargs={'pk': transaction.id}), format="json")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertContains(response, transaction)
 
@@ -508,7 +519,7 @@ class TagViewTestCase(TestCase):
         """Test that the api has user authorization."""
         new_client = APIClient()
         response = new_client.get(reverse('details_tag',
-            kwargs={'pk': 3}), format="json")
+                                  kwargs={'pk': 3}), format="json")
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_api_can_get_tag(self):
@@ -516,7 +527,7 @@ class TagViewTestCase(TestCase):
         tag = Tag.objects.get()
         response = self.client.get(
             reverse('details_tag',
-            kwargs={'pk': tag.id}), format="json")
+                    kwargs={'pk': tag.id}), format="json")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertContains(response, tag)
 
@@ -542,3 +553,60 @@ class TagViewTestCase(TestCase):
             follow=True)
         self.assertEquals(response.status_code, status.HTTP_204_NO_CONTENT)
 
+
+#
+# Tests for GraphQL API
+#
+class StoreGraphQLTestCase(JSONWebTokenTestCase):
+    """Test suite for the GraphQL API Store Queries."""
+
+    def setUp(self):
+        """Define the test client and other test variables."""
+        self.user = get_user_model().objects.create(username='test')
+        self.client.authenticate(self.user)
+
+        self.store_name = "Dummy Store"
+        self.store = Store(name=self.store_name)
+        self.store.save()
+
+    def test_api_can_create_store(self):
+        """Test the GraphQL API has Store creation capability."""
+        query = '''
+        mutation {
+            createStore(name: "Bob") {
+                name
+            }
+        }
+        '''
+
+        variables = {
+            'name': 'Bob',
+        }
+
+        #executed = self.client.execute(query, variables=variables)
+        executed = self.client.execute(query)
+        print("errors:", executed.errors)
+        print("data:", executed.data)
+        print("db1:", Store.objects.count())
+        print("db2:", Store.objects.get())
+        assert executed == {'blop'}
+
+    def test_api_can_get_store(self):
+
+        query = '''
+        {
+            allStores {
+                name
+            }
+        }
+        '''
+
+        variables = {
+          'username': self.user.username,
+        }
+
+        print("db3:", Store.objects.count())
+        executed = self.client.execute(query)
+        print("errors:", executed.errors)
+        print("data:", executed.data)
+        assert executed == {'blop'}
