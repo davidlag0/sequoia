@@ -153,7 +153,7 @@ class StoreViewTestCase(TestCase):
             reverse('details_store', kwargs={'pk': store.id}),
             format='json',
             follow=True)
-        self.assertEquals(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
 
 class AccountViewTestCase(TestCase):
@@ -210,7 +210,7 @@ class AccountViewTestCase(TestCase):
             reverse('details_account', kwargs={'pk': account.id}),
             format='json',
             follow=True)
-        self.assertEquals(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
 
 class CategoryViewTestCase(TestCase):
@@ -267,7 +267,7 @@ class CategoryViewTestCase(TestCase):
             reverse('details_category', kwargs={'pk': category.id}),
             format='json',
             follow=True)
-        self.assertEquals(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
 
 class SubCategoryViewTestCase(TestCase):
@@ -324,7 +324,7 @@ class SubCategoryViewTestCase(TestCase):
             reverse('details_subcategory', kwargs={'pk': subcategory.id}),
             format='json',
             follow=True)
-        self.assertEquals(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
 
 class TransactionStatusViewTestCase(TestCase):
@@ -383,7 +383,7 @@ class TransactionStatusViewTestCase(TestCase):
                     kwargs={'pk': transactionstatus.id}),
             format='json',
             follow=True)
-        self.assertEquals(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
 
 class TransactionViewTestCase(TestCase):
@@ -465,7 +465,7 @@ class TransactionViewTestCase(TestCase):
             reverse('details_transaction', kwargs={'pk': transaction.id}),
             format='json',
             follow=True)
-        self.assertEquals(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
 
 class TagViewTestCase(TestCase):
@@ -551,7 +551,7 @@ class TagViewTestCase(TestCase):
             reverse('details_tag', kwargs={'pk': tag.id}),
             format='json',
             follow=True)
-        self.assertEquals(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
 
 #
