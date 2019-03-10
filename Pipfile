@@ -1,0 +1,21 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+coverage = "*"
+bandit = "*"
+
+[packages]
+django = "*"
+python-decouple = "*"
+djangorestframework = "*"
+django-nose = "*"
+django-cors-headers = "*"
+graphene-django = "*"
+django-graphql-jwt = "*"
+djangorestframework-jwt = "*"
+
+[requires]
+python_version = "3.7"
