@@ -1,3 +1,4 @@
+"""
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
@@ -14,7 +15,9 @@ class IndexView(LoginRequiredMixin, generic.ListView):
 
     def get_queryset(self):
         """
+        """
         Return the last five transactions.
+        """
         """
         return Transaction.objects.filter(
             transaction_date__lte=timezone.now()
@@ -46,3 +49,4 @@ def vote(request, transaction_id):
         # with POST data. This prevents data from being posted twice if a
         # user hits the Back button.
         return HttpResponseRedirect(reverse('main:detail', args=(transaction.id,)))
+"""

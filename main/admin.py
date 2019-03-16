@@ -1,3 +1,4 @@
+"""
 from django.contrib import admin
 from django import forms
 
@@ -34,6 +35,7 @@ class TransactionAdmin(admin.ModelAdmin):
     list_select_related = ("store",)
 
     """
+    """
     search_fields = ["transaction_date_formatted",
                     "report_description",
                     "custom_description",
@@ -44,6 +46,7 @@ class TransactionAdmin(admin.ModelAdmin):
                     "category",
                     "subcategory",
                     "status"]
+    """
     """
 
     form = TransactionAdminForm
@@ -61,3 +64,4 @@ admin.site.register(Category)
 admin.site.register(SubCategory)
 admin.site.register(Status)
 admin.site.register(Tag)
+"""

@@ -1,3 +1,4 @@
+"""
 import datetime
 
 from django.db import models
@@ -89,3 +90,4 @@ class Tag(models.Model):
 
     def __str__(self):
         return self.tag_name
+"""

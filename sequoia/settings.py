@@ -10,8 +10,10 @@ ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
 
 # Application definition
 
+# To test before we get rid of the main application as
+# only the API app will be kept.
+#   'main.apps.MainConfig',
 INSTALLED_APPS = [
-    'main.apps.MainConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
