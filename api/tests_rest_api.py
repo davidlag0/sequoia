@@ -1,104 +1,16 @@
-from django.test import TestCase
+"""Tests for REST API Views."""
+
 from django.contrib.auth.models import User
+from django.urls import reverse
+from django.utils import timezone
+from django.test import TestCase
+from rest_framework import status
+from rest_framework.test import APIClient
 from .models import Store, Account, Category, SubCategory
 from .models import TransactionStatus, Tag, Transaction
-from rest_framework.test import APIClient
-from rest_framework import status
-from django.urls import reverse
 import time
-from django.utils import timezone
-from django.contrib.auth import get_user_model
-from graphql_jwt.testcases import JSONWebTokenTestCase
 
 
-class StoreModelTestCase(TestCase):
-    """This class defines the test suite for the API Store model."""
-
-    def setUp(self):
-        """Define the test client and other test variables."""
-        self.store_name = "Dummy Store"
-        self.store = Store(name=self.store_name)
-
-    def test_model_can_create_a_store(self):
-        """Test the Store model can create a store."""
-        old_count = Store.objects.count()
-        self.store.save()
-        new_count = Store.objects.count()
-        self.assertNotEqual(old_count, new_count)
-
-
-class AccountModelTestCase(TestCase):
-    """This class defines the test suite for the API Account model."""
-
-    def setUp(self):
-        """Define the test client and other test variables."""
-        self.account_name = "Dummy Account"
-        self.account = Account(name=self.account_name)
-
-    def test_model_can_create_an_account(self):
-        """Test the Account model can create an account."""
-        old_count = Account.objects.count()
-        self.account.save()
-        new_count = Account.objects.count()
-        self.assertNotEqual(old_count, new_count)
-
-
-class CategoryModelTestCase(TestCase):
-    """This class defines the test suite for the API Category model."""
-
-    def setUp(self):
-        """Define the test client and other test variables."""
-        self.category_name = "Dummy Category"
-        self.category = Category(name=self.category_name)
-
-    def test_model_can_create_a_category(self):
-        """Test the Category model can create a category."""
-        old_count = Category.objects.count()
-        self.category.save()
-        new_count = Category.objects.count()
-        self.assertNotEqual(old_count, new_count)
-
-
-class SubCategoryModelTestCase(TestCase):
-    """This class defines the test suite for the API SubCategory model."""
-
-    def setUp(self):
-        """Define the test client and other test variables."""
-        self.subcategory_name = "Dummy SubCategory"
-        self.subcategory = SubCategory(name=self.subcategory_name)
-
-    def test_model_can_create_a_subcategory(self):
-        """Test the Category model can create a subcategory."""
-        old_count = SubCategory.objects.count()
-        self.subcategory.save()
-        new_count = SubCategory.objects.count()
-        self.assertNotEqual(old_count, new_count)
-
-
-class TransactionStatusModelTestCase(TestCase):
-    """TransactionStatus REST API.
-
-    This class defines the test suite for the API
-    TransactionStatus model.
-    """
-
-    def setUp(self):
-        """Define the test client and other test variables."""
-        self.transactionstatus_name = "Dummy TransactionStatus"
-        self.transactionstatus = TransactionStatus(
-            name=self.transactionstatus_name)
-
-    def test_model_can_create_a_transactionstatus(self):
-        """Test the TransactionStatus model can create a transactionstatus."""
-        old_count = TransactionStatus.objects.count()
-        self.transactionstatus.save()
-        new_count = TransactionStatus.objects.count()
-        self.assertNotEqual(old_count, new_count)
-
-
-#
-# Tests for REST API
-#
 class StoreViewTestCase(TestCase):
     """Test suite for the api Store views."""
 
@@ -552,61 +464,3 @@ class TagViewTestCase(TestCase):
             format='json',
             follow=True)
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
-
-
-#
-# Tests for GraphQL API
-#
-class StoreGraphQLTestCase(JSONWebTokenTestCase):
-    """Test suite for the GraphQL API Store Queries."""
-
-    def setUp(self):
-        """Define the test client and other test variables."""
-        self.user = get_user_model().objects.create(username='test')
-        self.client.authenticate(self.user)
-
-        self.store_name = "Dummy Store"
-        self.store = Store(name=self.store_name)
-        self.store.save()
-
-    def test_api_can_create_store(self):
-        """Test the GraphQL API has Store creation capability."""
-        query = '''
-        mutation {
-            createStore(name: "Bob") {
-                name
-            }
-        }
-        '''
-
-        variables = {
-            'name': 'Bob',
-        }
-
-        #executed = self.client.execute(query, variables=variables)
-        executed = self.client.execute(query)
-        print("errors:", executed.errors)
-        print("data:", executed.data)
-        print("db1:", Store.objects.count())
-        print("db2:", Store.objects.get())
-        assert executed == {'blop'}
-
-    def test_api_can_get_store(self):
-
-        query = '''
-        {
-            allStores {
-                name
-            }
-        }
-        '''
-
-        variables = {
-          'username': self.user.username,
-        }
-
-        print("db3:", Store.objects.count())
-        executed = self.client.execute(query)
-        print("errors:", executed.errors)
-        print("data:", executed.data)
-        assert executed == {'blop'}
