@@ -1,3 +1,4 @@
+"""""API Views"""
 from rest_framework import generics, filters
 from .serializers import StoreSerializer, AccountSerializer
 from .serializers import CategorySerializer, SubCategorySerializer
@@ -119,4 +120,3 @@ class TagDetailsView(generics.RetrieveUpdateDestroyAPIView):
     """This class handles the http GET, PUT and DELETE requests of a tag."""
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
-

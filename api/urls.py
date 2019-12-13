@@ -1,4 +1,5 @@
-from django.conf.urls import url, include
+"""API URL's"""
+from django.conf.urls import url
 from django.urls import path
 from rest_framework.urlpatterns import format_suffix_patterns
 from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token

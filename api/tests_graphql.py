@@ -1,8 +1,8 @@
 """GraphQL Tests."""
 
-from .models import Store
 from django.contrib.auth import get_user_model
 from graphql_jwt.testcases import JSONWebTokenTestCase
+from .models import Store
 
 
 class StoreGraphQLTestCase(JSONWebTokenTestCase):
