@@ -8,6 +8,7 @@ coverage = "*"
 bandit = "*"
 pylint = "*"
 django-nose = "*"
+pylint-django = "*"
 
 [packages]
 django = "*"
