@@ -6,6 +6,7 @@ venv/
 
 # Code coverage
 .coverage
+htmlcov/
 
 # SQLite database files
 *.sqlite3
