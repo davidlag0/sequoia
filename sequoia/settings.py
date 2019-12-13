@@ -161,10 +161,9 @@ LOGGING = {
 }
 
 # Use nose to run all tests
-# TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 
 # Tell nose to measure coverage on the 'foo' and 'bar' apps
-"""
 NOSE_ARGS = [
     '--with-coverage',
     '--cover-package=api',
@@ -172,5 +171,5 @@ NOSE_ARGS = [
     '--cover-branches',
     '--cover-erase',
     '--cover-html',
+    '--cover-html-dir=htmlcov'
 ]
-"""
