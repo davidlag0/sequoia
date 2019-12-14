@@ -1,14 +1,14 @@
 """Tests for REST API Views."""
 
+import time
 from django.contrib.auth.models import User
 from django.urls import reverse
 from django.utils import timezone
 from django.test import TestCase
 from rest_framework import status
 from rest_framework.test import APIClient
-from .models import Store, Account, Category, SubCategory
-from .models import TransactionStatus, Tag, Transaction
-import time
+from api.models import Store, Account, Category, SubCategory
+from api.models import TransactionStatus, Tag, Transaction
 
 
 class StoreViewTestCase(TestCase):
@@ -36,7 +36,7 @@ class StoreViewTestCase(TestCase):
         """Test that the api has user authorization."""
         new_client = APIClient()
         response = new_client.get(reverse('details_store',
-                                  kwargs={'pk': 3}), format="json")
+                                          kwargs={'pk': 3}), format="json")
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_api_can_get_store(self):
@@ -93,7 +93,7 @@ class AccountViewTestCase(TestCase):
         """Test that the api has user authorization."""
         new_client = APIClient()
         response = new_client.get(reverse('details_account',
-                                  kwargs={'pk': 3}), format="json")
+                                          kwargs={'pk': 3}), format="json")
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_api_can_get_account(self):
@@ -150,7 +150,7 @@ class CategoryViewTestCase(TestCase):
         """Test that the api has user authorization."""
         new_client = APIClient()
         response = new_client.get(reverse('details_category',
-                                  kwargs={'pk': 3}), format="json")
+                                          kwargs={'pk': 3}), format="json")
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_api_can_get_category(self):
@@ -207,7 +207,7 @@ class SubCategoryViewTestCase(TestCase):
         """Test that the api has user authorization."""
         new_client = APIClient()
         response = new_client.get(reverse('details_subcategory',
-                                  kwargs={'pk': 3}), format="json")
+                                          kwargs={'pk': 3}), format="json")
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_api_can_get_subcategory(self):
@@ -264,7 +264,7 @@ class TransactionStatusViewTestCase(TestCase):
         """Test that the api has user authorization."""
         new_client = APIClient()
         response = new_client.get(reverse('details_transactionstatus',
-                                  kwargs={'pk': 3}), format="json")
+                                          kwargs={'pk': 3}), format="json")
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_api_can_get_transactionstatus(self):
@@ -431,7 +431,7 @@ class TagViewTestCase(TestCase):
         """Test that the api has user authorization."""
         new_client = APIClient()
         response = new_client.get(reverse('details_tag',
-                                  kwargs={'pk': 3}), format="json")
+                                          kwargs={'pk': 3}), format="json")
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_api_can_get_tag(self):
