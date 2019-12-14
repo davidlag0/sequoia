@@ -29,7 +29,6 @@ class StoreModelTestCase(TestCase):
         """Test the addition of a Store with a blank name."""
         # self.assertRaises(IntegrityError, Store.objects.create, name="")
         Store.objects.create(name="")
-        print("bleh:", Store.objects.get(pk=2).name)
         self.assertRaises(IntegrityError, Store.objects.create,
                           name=None)
 
