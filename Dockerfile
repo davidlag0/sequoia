@@ -5,11 +5,10 @@ FROM python:3.7
 MAINTAINER David Laganière
 
 # Create app directory
-RUN mkdir -p /squoia_api
+RUN mkdir -p /sequoia_api
 WORKDIR /sequoia_api
 
 # Install dependencies
-#RUN pip install gunicorn django decouple
 COPY Pipfile Pipfile.lock /sequoia_api/
 RUN pip install pipenv && pipenv install --system --deploy --ignore-pipfile
 
