@@ -9,7 +9,9 @@ RUN mkdir -p /squoia_api
 WORKDIR /sequoia_api
 
 # Install dependencies
-RUN pip install gunicorn django
+#RUN pip install gunicorn django decouple
+COPY Pipfile Pipfile.lock /sequoia_api/
+RUN pip install pipenv && pipenv install --system --deploy --ignore-pipfile
 
 # Copy the application folder inside the container
 COPY . /sequoia_api
