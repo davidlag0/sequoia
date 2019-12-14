@@ -18,6 +18,7 @@ django-cors-headers = "*"
 graphene-django = "*"
 django-graphql-jwt = "*"
 djangorestframework-jwt = "*"
+gunicorn = "*"
 
 [requires]
 python_version = "3.7"
