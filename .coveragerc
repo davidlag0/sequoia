@@ -6,8 +6,7 @@ branch = True
 show_missing = True
 omit =
   ./sequoia/*
-  ./main/*
   ./manage.py
   ./*/apps.py
   ./*/migrations/*
-  ./api/admin.py
+  ./api/tests/*
