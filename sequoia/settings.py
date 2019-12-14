@@ -160,6 +160,10 @@ LOGGING = {
     },
 }
 
+# DO NOT UNCOMMENT THIS. KEPT FOR HISTORICAL REASONS.
+# There is a bug with Django and nose that prevents code coverage
+# from working correctly to cover models.
+"""
 # Use nose to run all tests
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 
@@ -173,3 +177,4 @@ NOSE_ARGS = [
     '--cover-html',
     '--cover-html-dir=htmlcov'
 ]
+"""

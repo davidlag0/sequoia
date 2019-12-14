@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+"""Django Management"""
 import os
 import sys
 
@@ -13,4 +14,21 @@ if __name__ == "__main__":
             "available on your PYTHONPATH environment variable? Did you "
             "forget to activate a virtual environment?"
         ) from exc
+
+    # Code coverage is handled here because of a bug with Django and nose that
+    # hasn't been fixed after years.
+    IS_TESTING = 'test' in sys.argv
+
+    if IS_TESTING:
+        from coverage import Coverage
+        COV = Coverage()
+        COV.erase()
+        COV.start()
+
     execute_from_command_line(sys.argv)
+
+    if IS_TESTING:
+        COV.stop()
+        COV.save()
+        COV.report()
+        COV.html_report(directory='htmlcov')
