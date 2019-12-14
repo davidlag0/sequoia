@@ -3,8 +3,8 @@
 from django.db.utils import IntegrityError
 from django.db.models.deletion import ProtectedError
 from django.test import TestCase
-from .models import Store, Account, Category, SubCategory
-from .models import TransactionStatus, Transaction, Tag
+from api.models import Store, Account, Category, SubCategory
+from api.models import TransactionStatus, Transaction, Tag
 
 
 class StoreModelTestCase(TestCase):
@@ -17,8 +17,8 @@ class StoreModelTestCase(TestCase):
 
     def test_model_can_create_a_store(self):
         """Test the Store model can create a store."""
-        self.assertEquals(Store.objects.get().name,
-                          self.store_name)
+        self.assertEqual(Store.objects.get().name,
+                         self.store_name)
 
     def test_model_fails_with_duplicate_store(self):
         """Test the addition of a second Store with the same name."""
@@ -44,8 +44,8 @@ class AccountModelTestCase(TestCase):
 
     def test_model_can_create_an_account(self):
         """Test the Account model can create an account."""
-        self.assertEquals(Account.objects.get().name,
-                          self.account_name)
+        self.assertEqual(Account.objects.get().name,
+                         self.account_name)
 
     def test_model_fails_with_duplicate_account(self):
         """Test the addition of a second Account with the same name."""
@@ -63,8 +63,8 @@ class CategoryModelTestCase(TestCase):
 
     def test_model_can_create_a_category(self):
         """Test the Category model can create a category."""
-        self.assertEquals(Category.objects.get().name,
-                          self.category_name)
+        self.assertEqual(Category.objects.get().name,
+                         self.category_name)
 
     def test_model_fails_with_duplicate_category(self):
         """Test the addition of a second Category with the same name."""
@@ -82,8 +82,8 @@ class SubCategoryModelTestCase(TestCase):
 
     def test_model_can_create_a_subcategory(self):
         """Test the Category model can create a subcategory."""
-        self.assertEquals(SubCategory.objects.get().name,
-                          self.subcategory_name)
+        self.assertEqual(SubCategory.objects.get().name,
+                         self.subcategory_name)
 
     def test_model_fails_with_duplicate_subcategory(self):
         """Test the addition of a second SubCategory with the same name."""
@@ -105,8 +105,8 @@ class TransactionStatusModelTestCase(TestCase):
 
     def test_model_can_create_a_transactionstatus(self):
         """Test the TransactionStatus model can create a transactionstatus."""
-        self.assertEquals(TransactionStatus.objects.get().name,
-                          self.transactionstatus_name)
+        self.assertEqual(TransactionStatus.objects.get().name,
+                         self.transactionstatus_name)
 
     def test_model_fails_with_duplicate_transactionstatus(self):
         """Transactionstatus Duplicate Test.
@@ -141,10 +141,10 @@ class TransactionModelTestCase(TestCase):
 
     def test_model_can_create_a_transaction(self):
         """Test the Transaction model can create a transaction."""
-        self.assertEquals(Transaction.objects.get().original_description,
-                          self.original_description)
-        self.assertEquals(Transaction.objects.get().custom_description,
-                          self.custom_description)
+        self.assertEqual(Transaction.objects.get().original_description,
+                         self.original_description)
+        self.assertEqual(Transaction.objects.get().custom_description,
+                         self.custom_description)
 
 
 class TagModelTestCase(TestCase):
@@ -172,8 +172,8 @@ class TagModelTestCase(TestCase):
 
     def test_model_can_create_a_tag(self):
         """Test the Tag model can create a tag correctly."""
-        self.assertEquals(self.tag.tag_name, self.tag_name)
-        self.assertEquals(self.tag.transaction_id.id, self.transaction.id)
+        self.assertEqual(self.tag.tag_name, self.tag_name)
+        self.assertEqual(self.tag.transaction_id.id, self.transaction.id)
 
     def test_model_fails_with_duplicate_tag(self):
         """
