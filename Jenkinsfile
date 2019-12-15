@@ -14,13 +14,13 @@ node {
         app = docker.build("sequoia_api")
     }
 
-#    stage('Test image') {
+    /*stage('Test image') {*/
         /* Run Django tests. */
-
-#        app.inside {
-#            sh 'python manage.py test'
-#        }
-#    }
+        /*
+        app.inside {
+            sh 'python manage.py test'
+        }
+    }*/
 
     stage('Update the image of the sequoia_api_django service') {
 	sh 'docker service update --image sequoia_api:latest sequoia_api_django''
