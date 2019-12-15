@@ -23,6 +23,6 @@ node {
     }*/
 
     stage('Update the image of the sequoia_api_django service') {
-	sh 'docker service update --image sequoia_api:latest sequoia_api_django''
+	sh 'docker service update --image sequoia_api:latest sequoia_api_django'
     }
 }
