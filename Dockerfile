@@ -16,6 +16,9 @@ RUN pip install pipenv && pipenv install --system --deploy --ignore-pipfile
 COPY . /sequoia_api
 RUN ln -s /run/secrets/django_secrets .env
 
+# Update static files
+RUN python manage.py collectstatic --no-input
+
 # Expose the port
 EXPOSE 8000
  
