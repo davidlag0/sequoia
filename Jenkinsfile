@@ -27,6 +27,8 @@ node {
     }
 
     stage('Update static files') {
-        sh """docker exec -it `docker ps -a | grep sequoia_api_django | awk '{print \$1}'` python manage.py collectstatic --no-input"""
+        sh """#!/bin/bash
+            docker exec -it `docker ps -a | grep sequoia_api_django | awk '{print $1}'` python manage.py collectstatic --no-input
+           """
     }
 }
