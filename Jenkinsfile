@@ -1,4 +1,4 @@
-node {
+pipeline {
     checkout scm
     agent { node { label 'labelName' } }
     docker.image('mysql:5').withRun('-e "MYSQL_ROOT_PASSWORD=my-secret-pw"') { c ->
