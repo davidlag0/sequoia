@@ -1,0 +1,3 @@
+DEBUG=False
+SECRET_KEY=rc_^ie^1%37*aqu@ou&btm1!gnljd06xdk*+g-*)sjltaqy0_d
+ALLOWED_HOSTS='django'
