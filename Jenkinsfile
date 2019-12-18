@@ -9,7 +9,7 @@ pipeline {
         }
         stage('Build Docker image') {
             steps {
-                docker.build('sequoia_api:dev')
+                sh 'ls -la'
             }
         }
     }
