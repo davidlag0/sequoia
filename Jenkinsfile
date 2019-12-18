@@ -2,14 +2,9 @@ pipeline {
     agent { dockerfile true }
     triggers { pollSCM 'H/5 * * * *' }
     stages {
-        stage('Clone repository') {
+        stage('Run unit tests and verify code coverage') {
             steps {
-                checkout scm
-            }
-        }
-        stage('Build Docker image') {
-            steps {
-                sh 'ls -la'
+                sh 'python manage.py test'
             }
         }
     }
