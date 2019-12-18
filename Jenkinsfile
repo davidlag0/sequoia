@@ -9,7 +9,7 @@ pipeline {
         }
         stage('Build Docker image') {
             steps {
-                app = docker.build('sequoia_api:dev')
+                docker.build('sequoia_api:dev')
             }
         }
     }
