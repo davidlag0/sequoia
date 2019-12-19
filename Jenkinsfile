@@ -22,9 +22,7 @@ pipeline {
                         zoomCoverageChart: true,
                         enableNewApi: true,
                         lineCoverageTargets: '100, 100, 100',
-                        conditionalCoverageTargets: '100, 100, 100',
-                        classCoverageTargets: '100, 100, 100',
-                        fileCoverageTargets: '100, 100, 100',
+                        conditionalCoverageTargets: '100, 100, 100'
                     )
                 }
             }
