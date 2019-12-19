@@ -14,7 +14,18 @@ pipeline {
             steps {
                 script {
                     sh 'python manage.py test'
-                    cobertura coberturaReportFile: 'coverage.xml', enableNewApi: true, lineCoverageTargets: '80, 60, 70'
+                    cobertura(
+                        coberturaReportFile: 'coverage.xml',
+                        failNoReports: true,
+                        autoUpdateHealth: true,
+                        autoUpdateStability: true,
+                        zoomCoverageChart: true,
+                        enableNewApi: true,
+                        lineCoverageTargets: '100, 100, 100',
+                        conditionalCoverageTargets: '100, 100, 100',
+                        classCoverageTargets: '100, 100, 100',
+                        fileCoverageTargets: '100, 100, 100',
+                    )
                 }
             }
         }
