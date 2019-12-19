@@ -14,5 +14,12 @@ pipeline {
                 sh 'python manage.py test'
             }
         }
+        stage('Remove Docker image') {
+            steps {
+                script {
+                    sh 'docker rmi $(docker images --filter=reference='sequoia_api:dev' -q) --force'
+                }
+            }
+        }
     }
 }
