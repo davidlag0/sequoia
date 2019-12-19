@@ -13,7 +13,7 @@ pipeline {
             }
             steps {
                 script {
-                    sh 'pipenv run python manage.py test'
+                    sh 'python manage.py test'
                     cobertura(
                         coberturaReportFile: 'coverage.xml',
                         failNoReports: true,
