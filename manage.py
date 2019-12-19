@@ -32,3 +32,4 @@ if __name__ == "__main__":
         COV.save()
         COV.report()
         COV.html_report(directory='htmlcov')
+        COV.xml_report()
