@@ -12,7 +12,7 @@ pipeline {
                 SECRET_KEY = 'dev'
             }
             steps {
-                sh 'python manage.py test'
+                sh(script: 'python manage.py test', returnStatus: true)
             }
         }
         stage('Remove Docker image') {
