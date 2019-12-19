@@ -27,6 +27,11 @@ pipeline {
                 }
             }
         }
+        stage('Update image tags for production') {
+            steps {
+                sh 'echo "here!"'
+            }
+        }
     }
     post {
         always {
