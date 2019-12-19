@@ -162,7 +162,8 @@ LOGGING = {
 
 # DO NOT UNCOMMENT THIS. KEPT FOR HISTORICAL REASONS.
 # There is a bug with Django and nose that prevents code coverage
-# from working correctly to cover models.
+# from working correctly to cover models. See manage.py for code
+# coverage.
 """
 # Use nose to run all tests
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
