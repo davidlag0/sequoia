@@ -13,8 +13,8 @@ pipeline {
             }
             steps {
                 script {
-                    def status = sh(script: 'python manage.py test', returnStatus: true)
-                    return status == 0
+                    sh 'python manage.py test'
+                    cobertura coberturaReportFile: 'coverage.xml', enableNewApi: true, lineCoverageTargets: '80, 60, 70'
                 }
             }
         }
