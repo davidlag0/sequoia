@@ -1,7 +1,7 @@
 pipeline {
     agent {
         dockerfile {
-            additionalBuildArgs  '-t sequoia_api:dev'
+            true
         }
     }
     triggers { pollSCM 'H/5 * * * *' }
