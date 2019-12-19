@@ -8,5 +8,6 @@ show_missing = True
 omit =
   ./sequoia/*
   ./manage.py
+  ./api/apps.py
   ./*/migrations/*
   ./api/tests/*
