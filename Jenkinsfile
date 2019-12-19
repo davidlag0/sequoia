@@ -1,12 +1,12 @@
 pipeline {
-    agent {
-        dockerfile {
-            additionalBuildArgs '-t sequoia_api:dev'
-        }
-    }
     triggers { pollSCM 'H/5 * * * *' }
     stages {
         stage('Run unit tests and verify code coverage') {
+            agent {
+                dockerfile {
+                    additionalBuildArgs '-t sequoia_api:dev'
+                }
+            }
             environment {
                 SECRET_KEY = 'dev'
             }
