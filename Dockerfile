@@ -1,5 +1,5 @@
 # Base image
-FROM python:3.8-alpine
+FROM python:3.7-alpine
 
 # Create app directory
 RUN mkdir -p /sequoia_api
