@@ -40,6 +40,8 @@ pipeline {
                 sh """
                     docker rmi \$(docker images --filter=reference='sequoia_api:dev' -q) --force
                 """
+                echo 'Delete work directory'
+                deleteDir()
             }
         }
     }
