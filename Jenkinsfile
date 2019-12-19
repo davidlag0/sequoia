@@ -29,12 +29,14 @@ pipeline {
                 }
             }
         }
-        stage('Remove Docker image') {
-            steps {
-                script {
-                    sh """
-                        docker rmi \$(docker images --filter=reference='sequoia_api:dev' -q) --force
-                    """
+        post {
+            always {
+                steps {
+                    script {
+                        sh """
+                            docker rmi \$(docker images --filter=reference='sequoia_api:dev' -q) --force
+                        """
+                    }
                 }
             }
         }
