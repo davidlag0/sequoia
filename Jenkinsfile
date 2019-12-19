@@ -32,12 +32,11 @@ pipeline {
     }
     post {
         always {
-            step {
-                script {
-                    sh """
-                        docker rmi \$(docker images --filter=reference='sequoia_api:dev' -q) --force
-                    """
-                }
+            script {
+                echo 'Remove Docker images'
+                sh """
+                    docker rmi \$(docker images --filter=reference='sequoia_api:dev' -q) --force
+                """
             }
         }
     }
