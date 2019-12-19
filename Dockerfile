@@ -1,9 +1,6 @@
 # Base image
 FROM python:3.8-alpine
 
-# Maintainer
-MAINTAINER David Laganière
-
 # Create app directory
 RUN mkdir -p /sequoia_api
 WORKDIR /sequoia_api
