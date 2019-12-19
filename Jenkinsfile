@@ -18,7 +18,7 @@ pipeline {
             steps {
                 script {
                     sh """
-                        docker rmi $(docker images --filter=reference='sequoia_api:dev' -q) --force
+                        docker rmi \$(docker images --filter=reference='sequoia_api:dev' -q) --force
                     """
                 }
             }
