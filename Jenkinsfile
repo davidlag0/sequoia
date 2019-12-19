@@ -14,7 +14,7 @@ pipeline {
             steps {
                 script {
                     def status = sh(script: 'python manage.py test', returnStatus: true)
-                    sh 'echo $status'
+                    return status == 0
                 }
             }
         }
