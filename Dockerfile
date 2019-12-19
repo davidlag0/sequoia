@@ -8,6 +8,9 @@ MAINTAINER David Laganière
 RUN mkdir -p /sequoia_api
 WORKDIR /sequoia_api
 
+# Expose the port
+EXPOSE 8000
+
 # Install dependencies
 COPY Pipfile Pipfile.lock /sequoia_api/
 RUN pip install pipenv && pipenv install --system --deploy --ignore-pipfile
@@ -20,8 +23,5 @@ COPY ./config/temp_vars .env
 # Update static files
 RUN python manage.py collectstatic --no-input
 RUN rm .env
-
-# Expose the port
-EXPOSE 8000
  
 CMD ["gunicorn", "--bind", ":8000", "sequoia.wsgi:application"]
