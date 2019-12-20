@@ -40,8 +40,8 @@ pipeline {
             }
         }
         stage('Remove old production image') {
-            timeout(time: 30, unit: 'SECONDS') {
-                steps {
+            steps {
+                timeout(time: 30, unit: 'SECONDS') {
                     sh """
                         docker rmi \$(docker images --filter=reference='sequoia_api:to_delete' -q) --force
                     """
