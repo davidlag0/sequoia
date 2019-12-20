@@ -30,7 +30,6 @@ pipeline {
         stage('Update service with new image') {
             steps {
                 sh 'docker service update -d --force --image sequoia_api:dev sequoia_api_django'
-                sh 'sleep 15'
                 sh 'docker image ls'
                 sh 'docker ps -a'
             }
@@ -44,7 +43,6 @@ pipeline {
         }
         stage('Remove old production image') {
             steps {
-                sh 'sleep 15'
                 sh """
                     docker rmi \$(docker images --filter=reference='sequoia_api:to_delete' -q) --force
                 """
@@ -53,7 +51,7 @@ pipeline {
         stage('Update static files') {
             steps {
                 sh """
-                    docker exec -it \$(docker ps -a | grep sequoia_api_django | awk '{print \$1}') sh -c \"python manage.py collectstatic --no-input\"
+                    docker exec -it \$(docker ps -a | grep sequoia_api_django | awk '{print \$1}') sh -c \'exec python manage.py collectstatic --no-input\'
                 """
             }
         }
