@@ -5,12 +5,12 @@ FROM python:3.7-alpine
 RUN mkdir -p /sequoia_api
 WORKDIR /sequoia_api
 
-# Copy the application folder inside the container and install dependencies
-#COPY Pipfile Pipfile.lock /sequoia_api/
-COPY . /sequoia_api
+# Install dependencies
+COPY Pipfile Pipfile.lock /sequoia_api/
 RUN pip install pipenv && pipenv install --system --deploy --ignore-pipfile
 
-# Create symlink to secrets.
+# Copy the application folder inside the container
+COPY . /sequoia_api
 RUN ln -s /run/secrets/django_secrets .env
 
 # Expose the port
