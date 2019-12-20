@@ -50,7 +50,6 @@ pipeline {
         stage('Scale back replicas') {
             steps {
                 sh 'docker service scale sequoia_api_django=1'
-                sh 'sleep 15'
             }
         }
         stage('Update static files') {
