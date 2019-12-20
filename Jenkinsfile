@@ -39,11 +39,13 @@ pipeline {
                 sh 'docker rmi sequoia_api:dev'
             }
         }
-        stage('Remove old production image') {
-            steps {
-                sh """
-                    docker rmi \$(docker images --filter=reference='sequoia_api:to_delete' -q) --force
-                """
+        timeout(time: 30, unit: 'SECONDS') {
+            stage('Remove old production image') {
+                steps {
+                    sh """
+                        docker rmi \$(docker images --filter=reference='sequoia_api:to_delete' -q) --force
+                    """
+                }
             }
         }
         stage('Update static files') {
