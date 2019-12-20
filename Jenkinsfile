@@ -29,7 +29,8 @@ pipeline {
         }
         stage('Update image tags for production') {
             steps {
-                sh 'echo "here!"'
+                sh 'docker tag sequoia_api:dev sequoia_api:prod'
+                sh 'docker rmi sequoia_api:dev'
             }
         }
     }
