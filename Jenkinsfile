@@ -27,11 +27,9 @@ pipeline {
                 }
             }
         }
-        stage('Update service with new image') {
+        stage('Remove all service replicas') {
             steps {
-                sh 'docker service update -d --force --image sequoia_api:dev sequoia_api_django'
-                sh 'docker image ls'
-                sh 'docker ps -a'
+                sh 'docker service scale sequoia_api_django=0'
             }
         }
         stage('Update image tags for production') {
@@ -47,6 +45,12 @@ pipeline {
                 sh """
                     docker rmi \$(docker images --filter=reference='sequoia_api:to_delete' -q) --force
                 """
+            }
+        }
+        stage('Scale back replicas') {
+            steps {
+                sh 'docker service scale sequoia_api_django=1'
+                sh 'sleep 15'
             }
         }
         stage('Update static files') {
