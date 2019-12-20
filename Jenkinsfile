@@ -27,16 +27,41 @@ pipeline {
                 }
             }
         }
+        stage('Update service with new image') {
+            steps {
+                sh 'docker service update -d --force --image sequoia_api:dev sequoia_api_django'
+                sh 'docker image ls'
+                sh 'docker ps -a'
+            }
+        }
         stage('Update image tags for production') {
             steps {
-                sh 'echo "here!"'
+                sh 'docker tag sequoia_api:prod sequoia_api:to_delete'
+                sh 'docker tag sequoia_api:dev sequoia_api:prod'
+                sh 'docker rmi sequoia_api:dev'
+            }
+        }
+        stage('Remove old production image') {
+            steps {
+                sh 'sleep 5'
+                sh """
+                    docker rmi \$(docker images --filter=reference='sequoia_api:to_delete' -q) --force
+                """
+            }
+        }
+        stage('Update static files') {
+            steps {
+                sh """
+                    docker exec -it \$(docker ps -a | grep sequoia_api_django | awk '{print \$1}') sh -c \'exec python manage.py collectstatic --no-input\'
+                """
             }
         }
     }
+    /*
     post {
-        always {
+        failure {
             script {
-                echo 'Remove Docker images'
+                echo 'Remove development Docker images'
                 sh """
                     docker rmi \$(docker images --filter=reference='sequoia_api:dev' -q) --force
                 """
@@ -45,4 +70,5 @@ pipeline {
             }
         }
     }
+    */
 }
