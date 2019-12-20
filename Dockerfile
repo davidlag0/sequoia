@@ -5,6 +5,9 @@ FROM python:3.7-alpine
 RUN mkdir -p /sequoia_api
 WORKDIR /sequoia_api
 
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
 # Install dependencies
 COPY Pipfile Pipfile.lock /sequoia_api/
 RUN pip install pipenv && pipenv install --system --deploy --ignore-pipfile
