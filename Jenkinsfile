@@ -27,17 +27,30 @@ pipeline {
                 }
             }
         }
+        stage('Update service with new image') {
+            steps {
+                sh 'docker service update --image sequoia_api:dev sequoia_api_django'
+            }
+        }
         stage('Update image tags for production') {
             steps {
+                sh 'docker tag sequoia_api:prod sequoia_api:to_delete'
                 sh 'docker tag sequoia_api:dev sequoia_api:prod'
                 sh 'docker rmi sequoia_api:dev'
             }
         }
+        stage('Remove old production image') {
+            steps {
+                sh """
+                    docker rmi \$(docker images --filter=reference='sequoia_api:to_delete' -q) --force
+                """
+            }
+        }
     }
     post {
-        always {
+        failure {
             script {
-                echo 'Remove Docker images'
+                echo 'Remove development Docker images'
                 sh """
                     docker rmi \$(docker images --filter=reference='sequoia_api:dev' -q) --force
                 """
