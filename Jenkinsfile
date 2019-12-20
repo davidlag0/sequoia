@@ -55,13 +55,9 @@ pipeline {
         }
         stage('Update static files') {
             steps {
-                script {
-                    def container = \$(docker ps -q -f name="seqoia_api_django*")
-                    sh 'echo $container'
-                    sh """
-                        docker exec -it \$(docker ps -a | grep sequoia_api_django | awk '{print \$1}') sh -c \'exec python manage.py collectstatic --no-input\'
-                    """
-                }
+                sh """
+                    docker exec -it \$(docker ps -q -f name='seqoia_api_django*') sh -c 'exec python manage.py collectstatic --no-input'
+                """
             }
         }
     }
