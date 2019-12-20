@@ -46,6 +46,13 @@ pipeline {
                 """
             }
         }
+        stage('Update static files') {
+            steps {
+                sh """
+                    docker exec -it $(docker ps -a | grep sequoia_api_django | awk '{print \$1}') python manage.py collectstatic --no-input
+                """
+            }
+        }
     }
     post {
         failure {
