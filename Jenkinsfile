@@ -30,6 +30,8 @@ pipeline {
         stage('Update service with new image') {
             steps {
                 sh 'docker service update --image sequoia_api:dev sequoia_api_django'
+                sh 'sleep 15'
+                sh 'docker ps -a'
             }
         }
         stage('Update image tags for production') {
