@@ -11,3 +11,6 @@ coverage.xml
 
 # SQLite database files
 *.sqlite3
+
+# Development Django Settings
+sequoia/local_settings.py
