@@ -9,7 +9,7 @@ pipeline {
                 }
             }
             environment {
-                SECRET_KEY = 'dev'
+                DJANGO_SETTINGS_MODULE = config.settings.base
             }
             steps {
                 script {
