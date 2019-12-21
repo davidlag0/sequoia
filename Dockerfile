@@ -7,7 +7,6 @@ WORKDIR /sequoia_api
 
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
-ENV DJANGO_SETTINGS_MODULE=sequoia.settings.production
 
 # Install dependencies
 COPY Pipfile Pipfile.lock /sequoia_api/
