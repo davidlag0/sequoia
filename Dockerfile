@@ -11,7 +11,14 @@ ENV DJANGO_SETTINGS_MODULE=sequoia.settings.production
 
 # Install dependencies
 COPY Pipfile Pipfile.lock /sequoia_api/
-RUN pip install pipenv && pipenv install --system --deploy --ignore-pipfile
+RUN apk add --no-cache --virtual .build-deps \
+    gcc \
+    python3-dev \
+    musl-dev \
+    postgresql-dev \
+    && pip install pipenv \
+    && pipenv install --system --deploy --ignore-pipfile \
+    && apk del --no-cache .build-deps
 
 # Copy the application folder inside the container
 COPY . /sequoia_api
