@@ -19,4 +19,4 @@ RUN ln -s /run/secrets/django_secrets .env
 # Expose the port
 EXPOSE 8000
 
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "sequoia.wsgi:application"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "--log-level=info", "--access-logfile=-", "--error-logfile=-", "sequoia.wsgi:application"]
