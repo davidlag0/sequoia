@@ -13,6 +13,7 @@ pipeline {
             }
             steps {
                 script {
+                    sh 'echo $SECRET_KEY'
                     sh 'python manage.py test'
                     cobertura(
                         coberturaReportFile: 'coverage.xml',
@@ -59,6 +60,15 @@ pipeline {
                 """
             }
         }
+        /*
+        stage('Apply database migrations') {
+            steps {
+                sh """
+                    docker exec \$(docker ps -q -f name='sequoia_api_django*') sh -c 'exec python manage.py migrate --no-input'
+                """
+            }
+        }
+        */
     }
     /*
     post {
