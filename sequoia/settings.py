@@ -179,3 +179,11 @@ NOSE_ARGS = [
     '--cover-html-dir=htmlcov'
 ]
 """
+
+# To override certain settings for development, if any.
+try:
+    from local_settings import DATABASES as LOCAL_DB
+except ImportError:
+    pass
+
+DATABASES = LOCAL_DB
