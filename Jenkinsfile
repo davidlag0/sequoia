@@ -9,7 +9,7 @@ pipeline {
                 }
             }
             environment {
-                DJANGO_SETTINGS_MODULE = 'config.settings.base'
+                DJANGO_SETTINGS_MODULE = 'sequoia.settings.base'
             }
             steps {
                 script {
