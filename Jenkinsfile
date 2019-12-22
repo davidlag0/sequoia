@@ -9,6 +9,7 @@ pipeline {
                 }
             }
             environment {
+                SECRET_KEY = 'dev'
                 DJANGO_SETTINGS_MODULE = 'sequoia.settings.base'
             }
             steps {
