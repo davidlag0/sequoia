@@ -19,6 +19,7 @@ djangorestframework-jwt = "*"
 gunicorn = "*"
 django-nose = "*"
 coverage = "*"
+psycopg2 = "*"
 
 [requires]
 python_version = "3.7"
