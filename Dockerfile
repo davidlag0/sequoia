@@ -9,15 +9,21 @@ ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
 # Install dependencies
+#
+# It would be best to delete unused dependencies as much as possible but Python seems to
+# dynamically link with the PostgreSQL libraries. Thus, I decided to just keep all dependencies
+# in the image for now.
+#
 COPY Pipfile Pipfile.lock /sequoia_api/
-RUN apk add --no-cache --virtual .build-deps \
+#RUN apk add --no-cache --virtual .build-deps \
+RUN apk add --no-cache \
     gcc \
     python3-dev \
     musl-dev \
     postgresql-dev \
     && pip install pipenv \
-    && pipenv install --system --deploy --ignore-pipfile \
-    && apk del --no-cache .build-deps
+    && pipenv install --system --deploy --ignore-pipfile
+#    && apk del --no-cache .build-deps
 
 # Copy the application folder inside the container
 COPY . /sequoia_api
