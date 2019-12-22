@@ -1,7 +1,7 @@
 # pylint: disable=wildcard-import,unused-wildcard-import
 """Production Settings"""
 from .base import *
-
+"""
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -11,3 +11,4 @@ DATABASES = {
         'HOST': config('DB_HOST')
     }
 }
+"""
