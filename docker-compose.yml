@@ -1,17 +1,6 @@
 version: '3.7'
 
 services:
-    sequoia_api_test:
-        build:
-            context: .
-            dockerfile: Dockerfile
-        environment:
-            DJANGO_SETTINGS_MODULE: 'sequoia.settings.production'
-            DB_USER: 'test'
-            DB_PASSWORD: 'test'
-            DB_HOST: 'test_db'
-        volumes:
-            - ./:/sequoia_api
     test_db:
         image: postgres:12.1-alpine
         environment:
