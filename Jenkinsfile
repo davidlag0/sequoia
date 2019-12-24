@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Start test database') {
             steps {
-                sh 'docker-compose up -d --exit-code-from test_db --remove-orphans test_db'
+                sh 'docker-compose up -d --remove-orphans test_db'
             }
         }
         stage('Run unit tests and verify code coverage') {
