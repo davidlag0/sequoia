@@ -15,7 +15,10 @@ pipeline {
             }
             environment {
                 SECRET_KEY = 'dev'
-                DJANGO_SETTINGS_MODULE = 'sequoia.settings.base'
+                DB_USER = 'testuser'
+                DB_PASSWORD = 'testuser'
+                DB_HOST = 'test_db'
+                DJANGO_SETTINGS_MODULE = 'sequoia.settings.production'
             }
             steps {
                 script {
