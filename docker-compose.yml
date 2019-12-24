@@ -1,0 +1,22 @@
+version: '3.7'
+
+services:
+    sequoia_api_test:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        environment:
+            DJANGO_SETTINGS_MODULE: 'sequoia.settings.production'
+        volume:
+            "$(pwd)":/sequoia_api
+        secrets:
+            - django_secrets
+            - db_secrets
+
+secrets:
+    django_secrets:
+        name: sequoia_api.django_secrets
+        external: true
+    db_secrets:
+        name: sequoia_api.db_secrets
+        external: true
