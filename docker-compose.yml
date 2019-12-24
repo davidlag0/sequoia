@@ -4,5 +4,5 @@ services:
     test_db:
         image: postgres:12.1-alpine
         environment:
-            POSTGRES_PASSWORD: 'test'
-            POSTGRES_USER: 'test'
+            POSTGRES_PASSWORD: 'testuser'
+            POSTGRES_USER: 'testuser'
