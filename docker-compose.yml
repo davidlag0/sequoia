@@ -7,7 +7,7 @@ services:
             dockerfile: Dockerfile
         environment:
             DJANGO_SETTINGS_MODULE: 'sequoia.settings.production'
-        volume:
+        volumes:
             .:/sequoia_api
         secrets:
             - django_secrets
