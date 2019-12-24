@@ -7,16 +7,13 @@ services:
             dockerfile: Dockerfile
         environment:
             DJANGO_SETTINGS_MODULE: 'sequoia.settings.production'
+            DB_USER: 'test'
+            DB_PASSWORD: 'test'
+            DB_HOST: 'test_db'
         volumes:
             - ./:/sequoia_api
-        secrets:
-            - django_secrets
-            - db_secrets
-
-secrets:
-    django_secrets:
-        name: sequoia_api.django_secrets
-        external: true
-    db_secrets:
-        name: sequoia_api.db_secrets
-        external: true
+    test_db:
+        image: postgres:12.1-alpine
+        environment:
+            POSTGRES_PASSWORD: 'test'
+            POSTGRES_USER: 'test'
