@@ -2,9 +2,9 @@ pipeline {
     agent any
     triggers { pollSCM 'H/5 * * * *' }
     stages {
-        stage('Test stage with docker-compose') {
+        stage('Start test database') {
             steps {
-                sh 'docker-compose up --exit-code-from sequoia_api_test'
+                sh 'docker-compose up --exit-code-from test_db'
             }
         }
         stage('Run unit tests and verify code coverage') {
