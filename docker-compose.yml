@@ -8,7 +8,7 @@ services:
         environment:
             DJANGO_SETTINGS_MODULE: 'sequoia.settings.production'
         volumes:
-            .:/sequoia_api
+            - ./:/sequoia_api
         secrets:
             - django_secrets
             - db_secrets
