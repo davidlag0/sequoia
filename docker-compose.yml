@@ -7,10 +7,10 @@ services:
             POSTGRES_PASSWORD: 'testuser'
             POSTGRES_USER: 'testuser'
         networks:
-            - test-network
+            - test_network
         container_name: test_db
 
 networks:
     test-network:
         driver: overlay
-        name: test-network
+        name: test_network
