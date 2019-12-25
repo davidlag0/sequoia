@@ -8,6 +8,7 @@ services:
             POSTGRES_USER: 'testuser'
         networks:
             - test-network
+        container_name: test_db
 
 networks:
     test-network:
