@@ -11,6 +11,6 @@ services:
         container_name: test_db
 
 networks:
-    test-network:
+    test_network:
         driver: overlay
         name: test_network
