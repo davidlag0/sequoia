@@ -189,8 +189,7 @@ class TagModelTestCase(TestCase):
     def test_deleting_tag_keeps_transaction(self):
         """Test that deleting a tag keeps the related transaction."""
         self.tag.delete()
-        print('Transaction ID:', self.transaction.id)
-        self.assertEqual(self.transaction.id, 1)
+        self.assertEqual(Transaction.objects.count(), 1)
 
     def test_cannot_delete_transaction_if_tag_linked_to_it(self):
         """
