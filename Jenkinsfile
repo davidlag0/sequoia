@@ -23,8 +23,6 @@ pipeline {
             }
             steps {
                 script {
-                    sh 'echo $SECRET_KEY'
-                    sh 'ls -la /run'
                     sh 'python manage.py test'
                     cobertura(
                         coberturaReportFile: 'coverage.xml',
