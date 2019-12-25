@@ -11,6 +11,7 @@ pipeline {
             agent {
                 dockerfile {
                     additionalBuildArgs '-t sequoia_api:dev'
+                    args '--net=test_network'
                 }
             }
             environment {
