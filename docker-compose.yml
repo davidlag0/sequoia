@@ -6,3 +6,8 @@ services:
         environment:
             POSTGRES_PASSWORD: 'testuser'
             POSTGRES_USER: 'testuser'
+        networks:
+            - test-network
+
+networks:
+    test-network:
