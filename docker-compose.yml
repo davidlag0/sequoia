@@ -5,7 +5,7 @@ services:
         image: postgres:12.1-alpine
         environment:
             POSTGRES_PASSWORD: 'testuser'
-            POSTGRES_USER: 'testuser'
+            #POSTGRES_USER: 'testuser'
         networks:
             - test_network
         container_name: test_db
