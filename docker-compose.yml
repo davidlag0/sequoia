@@ -12,3 +12,5 @@ services:
 
 networks:
     test-network:
+        driver: overlay
+        name: test-network
