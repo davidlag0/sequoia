@@ -1,5 +1,8 @@
 """""Transactions API Views"""
 from rest_framework import generics, filters
+from rest_framework.response import Response
+from rest_framework.reverse import reverse
+from rest_framework.views import APIView
 from .serializers import StoreSerializer, AccountSerializer
 from .serializers import CategorySerializer, SubCategorySerializer
 from .serializers import TransactionStatusSerializer
@@ -120,3 +123,18 @@ class TagDetailsView(generics.RetrieveUpdateDestroyAPIView):
     """This class handles the http GET, PUT and DELETE requests of a tag."""
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
+
+class TransactionsView(APIView):
+    """Shows the root view of the Transactions API."""
+    def get(self, request):
+        """GET Method."""
+        data = {
+            'stores': reverse('create_store', request=request),
+            'accounts': reverse('create_account', request=request),
+            'categories': reverse('create_category', request=request),
+            'subcategories': reverse('create_subcategory', request=request),
+            'transaction_statuses': reverse('create_transactionstatus', request=request),
+            'transactions': reverse('create_transaction', request=request),
+            'tags': reverse('create_tag', request=request),
+        }
+        return Response(data)

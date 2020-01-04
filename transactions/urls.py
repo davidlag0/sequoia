@@ -10,6 +10,7 @@ from .views import SubCategoryCreateView, SubCategoryDetailsView
 from .views import TransactionStatusCreateView, TransactionStatusDetailsView
 from .views import TransactionCreateView, TransactionDetailsView
 from .views import TagCreateView, TagDetailsView
+from .views import TransactionsView
 
 
 urlpatterns = {
@@ -55,6 +56,8 @@ urlpatterns = {
         name="create_tag"),
     url(r'^tags/(?P<pk>[0-9]+)/$', TagDetailsView.as_view(),
         name="details_tag"),
+
+    path('', TransactionsView.as_view()),
 }
 
 urlpatterns = format_suffix_patterns(urlpatterns)
