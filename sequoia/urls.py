@@ -1,4 +1,5 @@
 """Application URL's"""
+from django.conf.urls import url
 from django.contrib import admin
 from django.urls import include, path
 # from django.contrib.auth import views as auth_views
@@ -6,6 +7,7 @@ from django.urls import include, path
 #from sequoia.schema import schema
 #from django.views.decorators.csrf import csrf_exempt
 
+from . import views
 
 urlpatterns = [
     # To test before removing the main app.
@@ -15,6 +17,8 @@ urlpatterns = [
     # path('accounts/password_reset/', auth_views.PasswordResetView.as_view(),
     # name='password_reset'),
     path('admin/', admin.site.urls),
-    path('api/', include('transactions.urls')),
+
+    #url(r'^api$', views.api_root),
+    path('api/transactions/', include('transactions.urls')),
     # path('graphql/', csrf_exempt(GraphQLView.as_view(graphiql=True, schema=schema))),
 ]

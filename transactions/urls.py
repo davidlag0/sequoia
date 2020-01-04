@@ -44,9 +44,10 @@ urlpatterns = {
         TransactionStatusDetailsView.as_view(),
         name="details_transactionstatus"),
 
-    url(r'^transactions/$', TransactionCreateView.as_view(),
+    url(r'^$', TransactionCreateView.as_view(),
         name="create_transaction"),
-    url(r'^transactions/(?P<pk>[0-9]+)/$',
+
+    url(r'^(?P<pk>[0-9]+)/$',
         TransactionDetailsView.as_view(),
         name="details_transaction"),
 
