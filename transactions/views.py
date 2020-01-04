@@ -1,8 +1,6 @@
 """""Transactions API Views"""
-from rest_framework import generics, filters
-from rest_framework.response import Response
-from rest_framework.reverse import reverse
-from rest_framework.views import APIView
+from rest_framework import filters
+from rest_framework import viewsets
 from .serializers import StoreSerializer, AccountSerializer
 from .serializers import CategorySerializer, SubCategorySerializer
 from .serializers import TransactionStatusSerializer
@@ -11,130 +9,66 @@ from .models import Store, Account, Category, SubCategory
 from .models import TransactionStatus, Transaction, Tag
 
 
-class StoreCreateView(generics.ListCreateAPIView):
-    """This class defines the create behavior of a store in our rest api."""
+class StoreViewSet(viewsets.ModelViewSet):
+    """
+    This viewset automatically provides `list`, `create`, `retrieve`,
+    `update` and `destroy` actions.
+    """
     queryset = Store.objects.all()
     serializer_class = StoreSerializer
     filter_backends = (filters.SearchFilter,)
     search_fields = ('name',)
 
-    def perform_create(self, serializer):
-        """Save the post data when creating a new store."""
-        serializer.save()
 
-
-class StoreDetailsView(generics.RetrieveUpdateDestroyAPIView):
-    """This class handles the http GET, PUT and DELETE requests of a store."""
-    queryset = Store.objects.all()
-    serializer_class = StoreSerializer
-
-
-class AccountCreateView(generics.ListCreateAPIView):
-    """This class defines the create behavior of an account in our rest api."""
-    queryset = Account.objects.all()
-    serializer_class = AccountSerializer
-
-    def perform_create(self, serializer):
-        """Save the post data when creating a new account."""
-        serializer.save()
-
-
-class AccountDetailsView(generics.RetrieveUpdateDestroyAPIView):
-    """This class handles the http GET, PUT and DELETE requests of an account."""
+class AccountViewSet(viewsets.ModelViewSet):
+    """
+    This viewset automatically provides `list`, `create`, `retrieve`,
+    `update` and `destroy` actions.
+    """
     queryset = Account.objects.all()
     serializer_class = AccountSerializer
 
 
-class CategoryCreateView(generics.ListCreateAPIView):
-    """This class defines the create behavior of a category in our rest api."""
-    queryset = Category.objects.all()
-    serializer_class = CategorySerializer
-
-    def perform_create(self, serializer):
-        """Save the post data when creating a new category."""
-        serializer.save()
-
-
-class CategoryDetailsView(generics.RetrieveUpdateDestroyAPIView):
-    """This class handles the http GET, PUT and DELETE requests of a category."""
+class CategoryViewSet(viewsets.ModelViewSet):
+    """
+    This viewset automatically provides `list`, `create`, `retrieve`,
+    `update` and `destroy` actions.
+    """
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
 
 
-class SubCategoryCreateView(generics.ListCreateAPIView):
-    """This class defines the create behavior of a subcategory in our rest api."""
-    queryset = SubCategory.objects.all()
-    serializer_class = SubCategorySerializer
-
-    def perform_create(self, serializer):
-        """Save the post data when creating a new subcategory."""
-        serializer.save()
-
-
-class SubCategoryDetailsView(generics.RetrieveUpdateDestroyAPIView):
-    """This class handles the http GET, PUT and DELETE requests of a subcategory."""
+class SubCategoryViewSet(viewsets.ModelViewSet):
+    """
+    This viewset automatically provides `list`, `create`, `retrieve`,
+    `update` and `destroy` actions.
+    """
     queryset = SubCategory.objects.all()
     serializer_class = SubCategorySerializer
 
 
-class TransactionStatusCreateView(generics.ListCreateAPIView):
-    """This class defines the create behavior of a transactionstatus in our rest api."""
-    queryset = TransactionStatus.objects.all()
-    serializer_class = TransactionStatusSerializer
-
-    def perform_create(self, serializer):
-        """Save the post data when creating a new transactionstatus."""
-        serializer.save()
-
-
-class TransactionStatusDetailsView(generics.RetrieveUpdateDestroyAPIView):
-    """This class handles the http GET, PUT and DELETE requests of a transactionstatus."""
+class TransactionStatusViewSet(viewsets.ModelViewSet):
+    """
+    This viewset automatically provides `list`, `create`, `retrieve`,
+    `update` and `destroy` actions.
+    """
     queryset = TransactionStatus.objects.all()
     serializer_class = TransactionStatusSerializer
 
 
-class TransactionCreateView(generics.ListCreateAPIView):
-    """This class defines the create behavior of a transaction in our rest api."""
-    queryset = Transaction.objects.all()
-    serializer_class = TransactionSerializer
-
-    def perform_create(self, serializer):
-        """Save the post data when creating a new transaction."""
-        serializer.save()
-
-
-class TransactionDetailsView(generics.RetrieveUpdateDestroyAPIView):
-    """This class handles the http GET, PUT and DELETE requests of a transaction."""
+class TransactionViewSet(viewsets.ModelViewSet):
+    """
+    This viewset automatically provides `list`, `create`, `retrieve`,
+    `update` and `destroy` actions.
+    """
     queryset = Transaction.objects.all()
     serializer_class = TransactionSerializer
 
 
-class TagCreateView(generics.ListCreateAPIView):
-    """This class defines the create behavior of a tag in our rest api."""
+class TagViewSet(viewsets.ModelViewSet):
+    """
+    This viewset automatically provides `list`, `create`, `retrieve`,
+    `update` and `destroy` actions.
+    """
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
-
-    def perform_create(self, serializer):
-        """Save the post data when creating a new tag."""
-        serializer.save()
-
-
-class TagDetailsView(generics.RetrieveUpdateDestroyAPIView):
-    """This class handles the http GET, PUT and DELETE requests of a tag."""
-    queryset = Tag.objects.all()
-    serializer_class = TagSerializer
-
-class TransactionsView(APIView):
-    """Shows the root view of the Transactions API."""
-    def get(self, request):
-        """GET Method."""
-        data = {
-            'stores': reverse('create_store', request=request),
-            'accounts': reverse('create_account', request=request),
-            'categories': reverse('create_category', request=request),
-            'subcategories': reverse('create_subcategory', request=request),
-            'transaction_statuses': reverse('create_transactionstatus', request=request),
-            'transactions': reverse('create_transaction', request=request),
-            'tags': reverse('create_tag', request=request),
-        }
-        return Response(data)
