@@ -1,4 +1,4 @@
-"""Tests for REST API Views."""
+"""Tests for Transactions REST API Views."""
 
 import time
 from django.contrib.auth.models import User
@@ -7,8 +7,8 @@ from django.utils import timezone
 from django.test import TestCase
 from rest_framework import status
 from rest_framework.test import APIClient
-from api.models import Store, Account, Category, SubCategory
-from api.models import TransactionStatus, Tag, Transaction
+from ..models import Store, Account, Category, SubCategory
+from ..models import TransactionStatus, Tag, Transaction
 
 
 class StoreViewTestCase(TestCase):

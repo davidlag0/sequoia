@@ -1,10 +1,10 @@
-"""Model Tests."""
+"""Transactions Model Tests."""
 
 from django.db.utils import IntegrityError
 from django.db.models.deletion import ProtectedError
 from django.test import TestCase
-from api.models import Store, Account, Category, SubCategory
-from api.models import TransactionStatus, Transaction, Tag
+from ..models import Store, Account, Category, SubCategory
+from ..models import TransactionStatus, Transaction, Tag
 
 
 class StoreModelTestCase(TestCase):

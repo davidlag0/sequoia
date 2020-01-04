@@ -1,4 +1,4 @@
-"""admin.py"""
+"""Transactions admin.py"""
 from django.contrib import admin
 
 from .models import Store, Account, Category, SubCategory, TransactionStatus

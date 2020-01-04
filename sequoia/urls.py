@@ -15,6 +15,6 @@ urlpatterns = [
     # path('accounts/password_reset/', auth_views.PasswordResetView.as_view(),
     # name='password_reset'),
     path('admin/', admin.site.urls),
-    path('api/', include('api.urls')),
+    path('api/', include('transactions.urls')),
     # path('graphql/', csrf_exempt(GraphQLView.as_view(graphiql=True, schema=schema))),
 ]

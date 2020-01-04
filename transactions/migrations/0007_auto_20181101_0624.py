@@ -7,7 +7,7 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('api', '0006_auto_20180826_0831'),
+        ('transactions', '0006_auto_20180826_0831'),
     ]
 
     operations = [
@@ -27,16 +27,16 @@ class Migration(migrations.Migration):
                 ('custom_description', models.CharField(blank=True, max_length=255)),
                 ('expense', models.DecimalField(blank=True, decimal_places=2, max_digits=8, null=True)),
                 ('revenue', models.DecimalField(blank=True, decimal_places=2, max_digits=8, null=True)),
-                ('account', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='api.Account')),
-                ('category', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='api.Category')),
-                ('store', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.PROTECT, to='api.Store')),
-                ('subcategory', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.PROTECT, to='api.SubCategory')),
-                ('transactionstatus', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='api.TransactionStatus')),
+                ('account', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='transactions.Account')),
+                ('category', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='transactions.Category')),
+                ('store', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.PROTECT, to='transactions.Store')),
+                ('subcategory', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.PROTECT, to='transactions.SubCategory')),
+                ('transactionstatus', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='transactions.TransactionStatus')),
             ],
         ),
         migrations.AddField(
             model_name='tag',
             name='transaction_id',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='api.Transaction'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='transactions.Transaction'),
         ),
     ]

@@ -1,4 +1,4 @@
-"""API Serializers"""
+"""Transactions API Serializers"""
 from rest_framework import serializers
 from .models import Store, Account, Category, SubCategory, TransactionStatus
 from .models import Transaction, Tag
