@@ -20,6 +20,7 @@ gunicorn = "*"
 django-nose = "*"
 coverage = "*"
 psycopg2 = "*"
+pyyaml = "*"
 
 [requires]
 python_version = "3.8"
