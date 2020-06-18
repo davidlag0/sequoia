@@ -2,8 +2,8 @@
 FROM docker.io/library/python:3.8.3-alpine3.11
 
 # Create app directory
-RUN mkdir -p /sequoia_api
-WORKDIR /sequoia_api
+RUN mkdir -p /app
+WORKDIR /app
 
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
@@ -14,7 +14,7 @@ ENV PYTHONUNBUFFERED 1
 # dynamically link with the PostgreSQL libraries. Thus, I decided to just keep all dependencies
 # in the image for now.
 #
-COPY Pipfile Pipfile.lock /sequoia_api/
+COPY Pipfile Pipfile.lock /app/
 #RUN apk add --no-cache --virtual .build-deps \
 RUN apk add --no-cache \
     gcc \
@@ -26,10 +26,11 @@ RUN apk add --no-cache \
 #    && apk del --no-cache .build-deps
 
 # Copy the application folder inside the container
-COPY . /sequoia_api
-RUN ln -s /run/secrets/django_secrets .env
+#COPY . /sequoia_api
+#RUN ln -s /run/secrets/django_secrets .env
 
 # Expose the port
-EXPOSE 8000
+EXPOSE 8092
 
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "--log-level=info", "--access-logfile=-", "--error-logfile=-", "sequoia.wsgi:application"]
+CMD ["python", "manage.py", "runserver", "8092", "--settings", "sequoia.settings.production"]
+#CMD ["sleep", "infinity"]
